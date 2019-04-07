@@ -1,0 +1,11 @@
+[package]
+name = "blog"
+version = "0.1.0"
+authors = ["Tom Arrell <tom.arrell@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+handlebars = "1.1.0"
+actix-web = "0.7"
+
+serde = "1.0.90"
