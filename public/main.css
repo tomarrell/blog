@@ -1,0 +1,9 @@
+html {
+  font-family: "Noto Serif", "serif";
+  padding: 2rem 3rem;
+}
+
+.content {
+  max-width: 600px;
+  margin: auto;
+}

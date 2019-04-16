@@ -1,8 +1,22 @@
 <!DOCTYPE html>
 <head>
   <title>Tom's Blog</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/public/main.css" />
 </head>
 
-<h2>Tom's Blog</h2>
-<p>Some cool content</p>
-<p>This is a {{test}} value</p>
+<div class="header">
+  <div class="left">
+    <h2>Tom's Blog</h2>
+  </div>
+
+  <div class="right">
+    <a href="https://tomarrell.com">Back to website</a>
+  </div>
+</div>
+
+<div class="content">
+  <h3>Posts</h3>
+  {{> post}}
+</div>

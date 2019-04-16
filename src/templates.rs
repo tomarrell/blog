@@ -24,7 +24,10 @@ impl Template {
     }
 
     pub fn register_templates(&mut self) {
-        let paths = vec![("layout", "templates/layout.html")];
+        let paths = vec![
+            ("layout", "templates/layout.html"),
+            ("post", "templates/post.html"),
+        ];
 
         paths.iter().for_each(|x| {
             assert!(self.hb.register_template_file(x.0, x.1).is_ok());
