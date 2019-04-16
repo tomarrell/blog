@@ -1,7 +1,10 @@
-use std::error::Error;
 use std::collections::BTreeMap;
+use std::error::Error;
 
+use actix_web::middleware::Logger;
 use actix_web::{http, server, App, HttpRequest, HttpResponse, Responder};
+use log::*;
+use pretty_env_logger;
 
 mod templates;
 use templates::Template;
@@ -31,14 +34,21 @@ struct AppState {
 }
 
 fn main() {
+    pretty_env_logger::init();
+
+    let address = "127.0.0.1:8080";
+
+    info!("Starting server on address {}", address);
+
     server::new(move || {
         let mut templates = Template::new();
         templates.register_templates();
 
         App::with_state(AppState { tpl: templates })
+            .middleware(Logger::new(r#"{ "ip": "%a", "host": "%{Host}i", "info": "%r", "status": "%s", "size": "%b", "referer": "%{Referer}i", "agent": "%{User-Agent}i", "timetaken": "%T" }"#))
             .resource("/", |r| r.method(http::Method::GET).f(index))
     })
-    .bind("127.0.0.1:8080")
+    .bind(address)
     .unwrap()
     .run();
 }
