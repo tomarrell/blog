@@ -2,12 +2,19 @@ use std::collections::BTreeMap;
 use std::error::Error;
 
 use actix_web::middleware::Logger;
-use actix_web::{http, fs, server, App, HttpRequest, HttpResponse, Responder};
+use actix_web::{fs, http, server, App, HttpRequest, HttpResponse, Responder};
 use log::*;
 use pretty_env_logger;
 
+mod parser;
+use parser::parse_posts;
+
 mod templates;
 use templates::Template;
+
+struct AppState {
+    tpl: Template,
+}
 
 fn handle_error(err: impl Error) -> HttpResponse {
     HttpResponse::InternalServerError().body(format!(
@@ -17,8 +24,9 @@ fn handle_error(err: impl Error) -> HttpResponse {
 }
 
 fn index(req: &HttpRequest<AppState>) -> impl Responder {
+    let posts = parse_posts();
     let mut data = BTreeMap::new();
-    data.insert("test", "test");
+    data.insert("posts", posts);
 
     let tpl = req.state();
     let rendered = match tpl.tpl.layout(data) {
@@ -27,10 +35,6 @@ fn index(req: &HttpRequest<AppState>) -> impl Responder {
     };
 
     HttpResponse::Ok().content_type("text/html").body(rendered)
-}
-
-struct AppState {
-    tpl: Template,
 }
 
 fn main() {

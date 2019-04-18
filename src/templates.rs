@@ -1,5 +1,5 @@
+use serde::Serialize;
 use std::error::Error;
-use serde::ser::Serialize;
 
 use handlebars::Handlebars;
 
@@ -12,13 +12,12 @@ impl Template {
         let mut handlebars = Handlebars::new();
         handlebars.set_strict_mode(true);
 
-        Template {
-            hb: handlebars,
-        }
+        Template { hb: handlebars }
     }
 
     pub fn layout<F>(&self, data: F) -> Result<String, impl Error>
-        where F: Serialize
+    where
+        F: Serialize,
     {
         self.hb.render("layout", &data)
     }
@@ -26,7 +25,7 @@ impl Template {
     pub fn register_templates(&mut self) {
         let paths = vec![
             ("layout", "templates/layout.html"),
-            ("post", "templates/post.html"),
+            ("snippet", "templates/snippet.html"),
         ];
 
         paths.iter().for_each(|x| {
