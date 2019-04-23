@@ -1,38 +1,86 @@
+use std::error::Error;
 use std::fs;
+use std::path::Path;
 
 use log::error;
-use log::info;
-use serde::Serialize;
-use toml::Value;
 
-const CONTENT_DIR: &'static str = "./posts";
+use crate::models::Post;
 
-#[derive(Serialize)]
-pub struct Post {
-    pub name: String,
-    pub date: String,
-    pub description: String,
+pub fn parse_posts_dir(dir_str: &str) -> Vec<Post> {
+    let dir = fs::read_dir(dir_str).expect("Failed to open posts directory");
+
+    let mut posts: Vec<Post> = dir
+        .map(|x| -> Result<Post, Box<dyn Error>> { parse_post(&x?.path()) })
+        .map(|x| {
+            if let Err(e) = x {
+                error!("A post failed to parse: {}", e);
+                return None;
+            };
+
+            x.ok()
+        })
+        .filter_map(|x| x)
+        .collect();
+
+    posts.sort();
+    posts
 }
 
-pub fn parse_posts() -> Vec<Post> {
-    let dir = match fs::read_dir(CONTENT_DIR) {
-        Ok(dir) => dir,
-        Err(err) => {
-            error!("Failed to open posts dir: {}", err);
-            return vec![]
-        },
-    };
+fn parse_post(path: &Path) -> Result<Post, Box<dyn Error>> {
+    let post: String = fs::read_to_string(path)?;
+    let parsed: Post = toml::from_str(&post)?;
 
-    let posts: Vec<Post> = dir.map(|x| {
-        // let path = x.path();
-        // info!("{:?}", value["foo"].as_str());
+    Ok(parsed)
+}
 
-        Post{
-            name: "This is a post title".to_string(),
-            date: "2019-01-01 10:30:00Z".to_string(),
-            description: "This is the description of a post. It covers a few interesting topics such as dogs, aeroplanes, and far off distant lands.".to_string(),
-        }
-    }).collect();
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use chrono::offset::TimeZone;
+    use chrono::Utc;
 
-    posts
+    #[test]
+    fn test_parsing_dir() {
+        let res = parse_posts_dir("./tests/basic");
+
+        assert_eq!(
+            res,
+            vec![Post {
+                name: "TestName".to_string(),
+                date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
+                description: "Test description".to_string(),
+                content: "Test content".to_string(),
+            }]
+        )
+    }
+
+    #[test]
+    fn test_parsing_single() {
+        let res = parse_post(Path::new("./tests/basic/test.toml"))
+            .expect("Failed to parse individual Post");
+
+        assert_eq!(
+            res,
+            Post {
+                name: "TestName".to_string(),
+                date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
+                description: "Test description".to_string(),
+                content: "Test content".to_string(),
+            }
+        )
+    }
+
+    #[test]
+    fn test_parsing_sorted() {
+        let posts = parse_posts_dir("./tests/sort");
+        let res: Vec<&str> = posts
+            .iter()
+            .map(|x| x.name.as_ref())
+            .collect();
+
+        assert_eq!(
+            res,
+            vec!["First", "Second"]
+        )
+    }
 }

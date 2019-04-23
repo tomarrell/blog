@@ -1,0 +1,11 @@
+# Info
+name = "Test Post on the 1st Jan"
+date = "2019-01-01T07:32:00Z"
+description = "A description about post 1 in on this blog"
+
+# Content
+content = """
+
+This is some content for the blog post. It is longer and support markdown. Woop woop.
+
+"""

@@ -1,10 +1,17 @@
-use serde::Serialize;
 use std::error::Error;
 
+use serde::Serialize;
 use handlebars::Handlebars;
+
+use crate::models;
 
 pub struct Template {
     hb: Handlebars,
+}
+
+#[derive(Serialize)]
+pub struct IndexData {
+    pub posts: Vec<models::Post>,
 }
 
 impl Template {
@@ -15,21 +22,28 @@ impl Template {
         Template { hb: handlebars }
     }
 
-    pub fn layout<F>(&self, data: F) -> Result<String, impl Error>
-    where
-        F: Serialize,
-    {
-        self.hb.render("layout", &data)
+    pub fn not_found(&self) -> Result<String, impl Error> {
+        self.hb.render("404", &())
+    }
+
+    pub fn index(&self, data: IndexData) -> Result<String, impl Error> {
+        self.hb.render("index", &data)
     }
 
     pub fn register_templates(&mut self) {
         let paths = vec![
-            ("layout", "templates/layout.html"),
+            ("index", "templates/index.html"),
             ("snippet", "templates/snippet.html"),
+            ("404", "templates/404.html"),
         ];
 
         paths.iter().for_each(|x| {
             assert!(self.hb.register_template_file(x.0, x.1).is_ok());
         });
     }
+}
+
+#[cfg(test)]
+mod tests {
+
 }
