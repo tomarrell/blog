@@ -4,7 +4,7 @@ use std::path::Path;
 
 use log::error;
 
-use crate::models::Post;
+use crate::models::{Post, TomlPost};
 
 pub fn parse_posts_dir(dir_str: &str) -> Vec<Post> {
     let dir = fs::read_dir(dir_str).expect("Failed to open posts directory");
@@ -28,9 +28,22 @@ pub fn parse_posts_dir(dir_str: &str) -> Vec<Post> {
 
 fn parse_post(path: &Path) -> Result<Post, Box<dyn Error>> {
     let post: String = fs::read_to_string(path)?;
-    let parsed: Post = toml::from_str(&post)?;
+    let parsed: TomlPost = toml::from_str(&post)?;
 
-    Ok(parsed)
+    let stem = path
+        .file_stem()
+        .ok_or("Invalid stem on file path")?
+        .to_str()
+        .ok_or("Unable to convert file name to str")?
+        .to_string();
+
+    Ok(Post {
+        id: stem,
+        title: parsed.title,
+        date: parsed.date,
+        description: parsed.description,
+        content: parsed.content,
+    })
 }
 
 #[cfg(test)]
@@ -46,7 +59,8 @@ mod tests {
         assert_eq!(
             res,
             vec![Post {
-                name: "TestName".to_string(),
+                id: "test".to_string(),
+                title: "TestName".to_string(),
                 date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
                 description: "Test description".to_string(),
                 content: "Test content".to_string(),
@@ -62,7 +76,8 @@ mod tests {
         assert_eq!(
             res,
             Post {
-                name: "TestName".to_string(),
+                id: "test".to_string(),
+                title: "TestName".to_string(),
                 date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
                 description: "Test description".to_string(),
                 content: "Test content".to_string(),
@@ -73,14 +88,8 @@ mod tests {
     #[test]
     fn test_parsing_sorted() {
         let posts = parse_posts_dir("./tests/sort");
-        let res: Vec<&str> = posts
-            .iter()
-            .map(|x| x.name.as_ref())
-            .collect();
+        let res: Vec<&str> = posts.iter().map(|x| x.title.as_ref()).collect();
 
-        assert_eq!(
-            res,
-            vec!["First", "Second"]
-        )
+        assert_eq!(res, vec!["First", "Second"])
     }
 }

@@ -6,3 +6,12 @@ html {
   max-width: 800px;
   margin: auto;
 }
+
+.snippet {
+  margin-bottom: 2rem;
+}
+
+.snippet hr {
+  width: 6rem;
+  margin-left: 0;
+}

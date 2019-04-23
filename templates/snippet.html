@@ -1,5 +1,8 @@
 {{#each posts}}
+<div class="snippet">
   <h2>{{ name }}</h2>
   <p>{{ description }}</p>
-  <button>View more</button>
+  <button onClick="window.location.href='/post/{{id}}'">View more</button>
+  <hr />
+</div>
 {{/each}}

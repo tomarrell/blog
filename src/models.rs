@@ -3,9 +3,18 @@ use std::cmp::{Ord, PartialOrd, Ordering};
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
 
+#[derive(Deserialize)]
+pub struct TomlPost {
+    pub title: String,
+    pub date: DateTime<Utc>,
+    pub description: String,
+    pub content: String,
+}
+
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct Post {
-    pub name: String,
+    pub id: String,
+    pub title: String,
     pub date: DateTime<Utc>,
     pub description: String,
     pub content: String,
