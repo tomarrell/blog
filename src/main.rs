@@ -1,7 +1,11 @@
+use std::path::Path;
+
 use actix_web::middleware::Logger;
-use actix_web::{fs, http, server, App, HttpRequest, HttpResponse, Responder};
-use log::*;
+use actix_web::{fs, http, server, App, HttpRequest, Responder};
+use comrak::{markdown_to_html, ComrakOptions};
 use pretty_env_logger;
+use log::*;
+
 
 mod models;
 mod parser;
@@ -9,6 +13,7 @@ mod templates;
 mod utils;
 
 const CONTENT_DIR: &'static str = "./posts";
+const POST_FILE_EXT: &'static str = "toml";
 const LOGGER_FORMAT: &'static str = r#"{ "ip": "%a", "host": "%{Host}i", "info": "%r", "status": "%s", "size": "%b", "referer": "%{Referer}i", "agent": "%{User-Agent}i", "timetaken": "%T" }"#;
 
 struct AppState {
@@ -33,19 +38,26 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
         }
     };
 
-    info!("Fetching post directly: {}", post_name);
+    let path = Path::new(CONTENT_DIR)
+        .join(post_name)
+        .with_extension(POST_FILE_EXT);
 
-    // let posts = parser::parse_post(CONTENT_DIR);
+    info!(
+        "Fetching post with path: '{}'",
+        path.to_str().unwrap_or("// Failed")
+    );
 
-    // let tpl = req.state();
-    // let rendered = match tpl.tpl.layout(IndexData { posts }) {
-    // Ok(x) => x,
-    // Err(e) => return utils::handle_error(e),
-    // };
+    let raw_post = match parser::parse_post(&path) {
+        Ok(post) => post,
+        Err(e) => return utils::respond_with_error(e.description()),
+    };
 
-    // HttpResponse::Ok().content_type("text/html").body(rendered)
+    let rendered_post = models::Post {
+        content: markdown_to_html(&raw_post.content, &ComrakOptions::default()),
+        ..raw_post
+    };
 
-    HttpResponse::Ok().body("A cool post")
+    utils::respond(req.state().tpl.post(rendered_post), http::StatusCode::NOT_FOUND)
 }
 
 fn not_found(req: &HttpRequest<AppState>) -> impl Responder {

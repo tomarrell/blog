@@ -11,7 +11,26 @@ html {
   margin-bottom: 2rem;
 }
 
-.snippet hr {
+hr {
   width: 6rem;
   margin-left: 0;
 }
+
+.post-content {
+  position: relative;
+}
+
+.post-content img {
+  max-width: 100%;
+}
+
+/*
+ * Fix the font-sizes of titles, they're a bit big...
+ * Make them no bigger than the page header at 3.6rem.
+ */
+.post-content h1 { font-size: 3.6rem; }
+.post-content h2 { font-size: 3.0rem; }
+.post-content h3 { font-size: 2.4rem; }
+.post-content h4 { font-size: 1.8rem; }
+.post-content h5 { font-size: 1.2rem; }
+.post-content h6 { font-size: 0.8rem; }

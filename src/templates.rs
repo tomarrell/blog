@@ -30,11 +30,19 @@ impl Template {
         self.hb.render("index", &data)
     }
 
+    pub fn post(&self, data: models::Post) -> Result<String, impl Error> {
+        self.hb.render("post", &data)
+    }
+
     pub fn register_templates(&mut self) {
         let paths = vec![
             ("index", "templates/index.html"),
-            ("snippet", "templates/snippet.html"),
+            ("post", "templates/post.html"),
             ("404", "templates/404.html"),
+            // Consumed by other templates
+            ("_base", "templates/base.html"),
+            ("_heading", "templates/heading.html"),
+            ("_snippet", "templates/snippet.html"),
         ];
 
         paths.iter().for_each(|x| {

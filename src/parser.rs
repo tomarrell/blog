@@ -1,5 +1,4 @@
-use std::error::Error;
-use std::fs;
+use std::error::Error; use std::fs;
 use std::path::Path;
 
 use log::error;
@@ -26,7 +25,7 @@ pub fn parse_posts_dir(dir_str: &str) -> Vec<Post> {
     posts
 }
 
-fn parse_post(path: &Path) -> Result<Post, Box<dyn Error>> {
+pub fn parse_post(path: &Path) -> Result<Post, Box<dyn Error>> {
     let post: String = fs::read_to_string(path)?;
     let parsed: TomlPost = toml::from_str(&post)?;
 
