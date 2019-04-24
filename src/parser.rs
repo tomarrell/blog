@@ -5,7 +5,7 @@ use log::error;
 
 use crate::models::{Post, TomlPost};
 
-pub fn parse_posts_dir(dir_str: &str) -> Vec<Post> {
+pub fn parse_posts_dir(dir_str: &Path) -> Vec<Post> {
     let dir = fs::read_dir(dir_str).expect("Failed to open posts directory");
 
     let mut posts: Vec<Post> = dir
@@ -53,7 +53,7 @@ mod tests {
 
     #[test]
     fn test_parsing_dir() {
-        let res = parse_posts_dir("./tests/basic");
+        let res = parse_posts_dir(Path::new("./tests/basic"));
 
         assert_eq!(
             res,
@@ -86,7 +86,7 @@ mod tests {
 
     #[test]
     fn test_parsing_sorted() {
-        let posts = parse_posts_dir("./tests/sort");
+        let posts = parse_posts_dir(Path::new("./tests/sort"));
         let res: Vec<&str> = posts.iter().map(|x| x.title.as_ref()).collect();
 
         assert_eq!(res, vec!["First", "Second"])
