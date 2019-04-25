@@ -13,7 +13,7 @@ mod utils;
 
 const CONTENT_DIR: &'static str = "./posts";
 const POST_FILE_EXT: &'static str = "toml";
-const LOGGER_FORMAT: &'static str = r#"{ "ip": "%a", "host": "%{Host}i", "info": "%r", "status": "%s", "size": "%b", "referer": "%{Referer}i", "agent": "%{User-Agent}i", "timetaken": "%T" }"#;
+const LOGGER_FORMAT: &'static str = r#"{ "ip": "%{X-PROXY-IP}i", "host": "%{Host}i", "info": "%r", "status": "%s", "size": "%b", "referer": "%{Referer}i", "agent": "%{User-Agent}i", "timetaken": "%T" }"#;
 
 struct AppState {
     tpl: templates::Template,
