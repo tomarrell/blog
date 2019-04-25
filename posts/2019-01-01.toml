@@ -26,6 +26,6 @@ This is some content for the blog post. It is longer and support markdown. Woop 
 * This
 
 
-![](https://bento.cdn.pbs.org/hostedbento-prod/filer_public/Big%20Pacific/Photos/BigPacific_Promo_Thumb.jpg)
+![](/public/images/turtle.jpg)
 
 """

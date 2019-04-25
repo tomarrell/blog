@@ -3,9 +3,8 @@ use std::path::Path;
 use actix_web::middleware::Logger;
 use actix_web::{fs, http, server, App, HttpRequest, Responder};
 use comrak::{markdown_to_html, ComrakOptions};
-use pretty_env_logger;
 use log::*;
-
+use pretty_env_logger;
 
 mod models;
 mod parser;
@@ -21,7 +20,7 @@ struct AppState {
 }
 
 fn index(req: &HttpRequest<AppState>) -> impl Responder {
-    let posts = parser::parse_posts_dir(CONTENT_DIR);
+    let posts = parser::parse_posts_dir(Path::new(CONTENT_DIR));
 
     utils::respond(
         req.state().tpl.index(templates::IndexData { posts }),
@@ -49,7 +48,10 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
 
     let raw_post = match parser::parse_post(&path) {
         Ok(post) => post,
-        Err(e) => return utils::respond_with_error(e.description()),
+        Err(_) => {
+            error!("Failed to find post at path: {}", path.to_str().unwrap_or("// Failed"));
+            return utils::respond(req.state().tpl.not_found(), http::StatusCode::NOT_FOUND);
+        }
     };
 
     let rendered_post = models::Post {
@@ -57,7 +59,10 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
         ..raw_post
     };
 
-    utils::respond(req.state().tpl.post(rendered_post), http::StatusCode::NOT_FOUND)
+    utils::respond(
+        req.state().tpl.post(rendered_post),
+        http::StatusCode::NOT_FOUND,
+    )
 }
 
 fn not_found(req: &HttpRequest<AppState>) -> impl Responder {
