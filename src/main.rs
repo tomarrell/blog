@@ -70,7 +70,7 @@ fn not_found(req: &HttpRequest<AppState>) -> impl Responder {
 }
 
 fn main() {
-    pretty_env_logger::init();
+    pretty_env_logger::init_timed();
 
     let address = "127.0.0.1:8080";
 
