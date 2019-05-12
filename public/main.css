@@ -2,6 +2,10 @@ html {
   padding: 2rem 3rem;
 }
 
+.header {
+  margin-bottom: 2rem;
+}
+
 .content {
   max-width: 800px;
   margin: auto;
