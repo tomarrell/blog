@@ -38,3 +38,9 @@ hr {
 .post-content h4 { font-size: 1.8rem; }
 .post-content h5 { font-size: 1.2rem; }
 .post-content h6 { font-size: 0.8rem; }
+
+@media (max-width: 520px) { 
+  html {
+    padding: 2rem 1rem;
+  }
+}
