@@ -1,0 +1,104 @@
+This is the story about how I solved my increasing problem with wrist pain. **TLDR, *I built a keyboard***. And yes, I am crazy enough to rely on it for work as well. This is going to act as somewhat of a build overview.
+
+RSI, or repetitive strain injury, is a pretty terrifying reality to confront as a programmer. It makes typing painful, long stretches of doing your job less than enjoyable. Noone wants that.
+
+While working at a previous company, I began to feel discomfort after typing for long stretches. At first I thought nothing of it. It'll go away on it's own. But it didn't go away. It kept creeping in during long sessions. It would force me to stop, stretch my hands, and not want to return them to the keyboard. Not a great thing when your job is to press those keys in front of you.
+
+Now I'm certainly not the first person to have this problem. There are [plenty](https://blog.evanweaver.com/2012/09/05/a-programmers-guide-to-healing-rsi/) of [people](https://mdlayher.com/blog/a-programmers-journey-with-rsi/) that have [similar issues](https://julie.io/writing/beating-programmers-rsi/). Various solutions are discussed that are certainly useful. But I found the single solution to my issue to be simply building a keyboard that was designed for typing.
+
+![](https://imgur.com/fbqTfma.jpg)
+Goodbye old friend.
+
+## Choosing the layout
+
+Now layout was something that was rather critical to me. I figured that if I wanted my posture to improve, I needed something that was split to prevent the angulation of my wrists.
+
+Looking at commercial options, the [Ergodox](https://ergodox-ez.com/) was an attractive choice. But with a $325 USD base price, my wallet was quivering in fear.
+
+I had a very cool colleague named Dmitry, who I had seen using a very interesting keyboard called the Kinesis Advantage.
+
+![](https://imgur.com/XLyfMaf.jpg)
+
+This was the first time I had seen a *welled* layout. 
+
+This layout made a lot of sense to me. It started making me think about the actual movement of my fingers. They extend forwards and contract backwards in a straight line. You can try it yourself--hold the back of your fist up to your eyes and extend one finger. Watch its movement. Then again from the side. 
+
+This led to conclusion number one: The staggered layout was simply an artifact of the typewriter days, and should be replaced with an ortholinear layout.
+
+Followed quickly by conclusion number two: A welled shape was more natural reduce total hand and finger movement in order to reach keys.
+
+## The Dactyl
+
+I began to look up keyboards that fit the above criteria. Unfortuntely, the only real commercial option that I could find was the Kinesis. And that bad boy cost nothing short of your first born and some.
+
+So I had a look at utilizing my two 3D printers.
+
+What I came across was a fantastic talk from Matt Aderath named ["clojure.core/typing - Matt Adereth"](https://www.youtube.com/watch?v=uk3A41U0iO4), I highly recommend checking it out if you want to be blown away by Clojure generating STL's. 
+
+He spoke about designing the perfect keyboard. He named it the Dactyl. He very generously made all of the STL's and source for generating the OpenSCAD available on Github, which you can [find here](https://github.com/adereth/dactyl-keyboard).
+
+Armed with basic Clojure skills, and enough rolls of filament to sink a freighter, I began the journey of building my own version of this keyboard.
+
+I made a couple of key modifications. I wanted to be able to plug either half into my computer and have it act as the master, and also have them work completely standalone. This was something that wasn't a priority in Matt's design. He uses a Teensy to interface over USB, and an IO expander in order to encode the signal from the opposing half and send it back to the Teensy over TRRS.
+
+So I decided that I needed a microcontroller in each half. I opted for the inexpensive and solid performer, the Sparkfun Pro Micro, packing a 16MHz ATmega32U4. Each Pro Micro would control reading from its own key matrix, and decide whether to send the signal directly to the computer, or to the other half, depending on whether it was plugged in via mini USB.
+
+Fantastic idea. But this meant making some modifications to the some of the case dimensions. Modifications that were attempted, but once printed, ended up not fitting. You'll see the result of this shortly.
+
+## Printing
+
+I printed each part of the Dactyl on my Creality CR10S a few times, each time with slightly modified supports. The supports were a mission to get right with the large curved surface. Lots of support meant long print times.
+
+![The Creality CR10S](https://imgur.com/jDF6mCb.jpg)
+The Creality CR10S atop its elegant IKEA base
+
+It was split into 4 different parts. A top and bottom for both the left and right halves.
+
+## Switches
+
+Once each of the parts was successfully printed. The next thing to install were the switches. These were to be crucial if my goal was to reduce the strain on my hands while typing. Therefore, the switches I chose were Cherry MX Browns. This was due to their relatively low actuation force at just 55cN, and their quiet nature so I wouldn't be disturbing everyone in the open plan office.
+
+![Cherry MX Brown switches in the case](https://imgur.com/LCkK039.jpg)
+
+Also of course I didn't have enough of the Cherry's in a single packet from Aliexpress, I was 3 or so short. So of course I substituted those three for Kailh Browns that I had lying around. Can't say I've ever been able to tell the difference, although I think strategic placement may have had something to do with that.
+
+## Wiring
+
+Once the switches were placed, it was time for wiring. If you've never seen any keyboard wiring before, they commonly use a matrix layout, configured into rows and columns in order to get around the otherwise enormous IO requirements for a single controller. This way, the controller can simply scan the rows and columns.
+
+The basic algorithm to do this is:
+```
+apply voltage to COL_1:
+  if COL_1 is HIGH:
+    clear COL_1 and continue to COL_2
+  else:
+    if ROW_1 is high: do ROW_1_COL_1 action
+    if ROW_2 is high: do ROW_2_COL_1 action
+    if ROW_3 is high: do ROW_3_COL_1 action
+    ...cont for all rows
+...cont for all columns
+```
+
+Where the actions are simply registered keypresses, which will be sent to the main computer on the next poll.
+
+It is also important to remember to add individual diodes to the switches in order to prevent current from travelling in the wrong direction, causing ghosting.
+
+![A mess of a soldering station](https://imgur.com/JhZfSgm.jpg)
+![Keyboard wiring matrix](https://imgur.com/9vAYUkx.jpg)
+
+You can see the columns in blue, and the beginning of the rows, in black. The thumb cluster posed a little bit more of a logistical challenge, as the number of rows per column is strictly limited on my Pro Micro due to the number of IO pins.
+
+## Firmware
+
+The firmware essentially handles the scanning of the pins, the translation of the matrix into a keycode using a mapping, and then the communication with the machine the keyboard is plugged into. After screwing around writing a custom scanning implementation in Rust, and having something that worked but certainly lacking useful features, I opted for customizing the fantastic [QMK Firmware](https://github.com/qmk/qmk_firmware). 
+
+My implementation can be found over on my Github as a [fork](https://github.com/tomarrell/qmk_firmware).
+
+The mapping I now use underwent a few iterations. This is a fantastic process. Having almost unlimited possibilities, and being able to choose exactly the placement of every piece of functionality. My strong recommendation is to start from scratch. Give yourself only letters to begin with. Iterate quickly. When you find yourself not being able to do something, add it to your config. Take notes of the things you wish you could have done in a single keypress, and add those as well. Each time you run into a new missing key, think about its placement, and then place it somewhere that fits exactly the use case you need it for.
+
+This process takes a bit of experimentation, and you won't get it right the first time with all the key placements. But I can guarantee once you do, your keyboard will feel like a real extension of your hand.
+
+## The final product
+
+
+
