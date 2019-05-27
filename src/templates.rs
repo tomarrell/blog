@@ -1,7 +1,7 @@
 use std::error::Error;
 
-use serde::Serialize;
 use handlebars::Handlebars;
+use serde::Serialize;
 
 use crate::models;
 
@@ -11,6 +11,7 @@ pub struct Template {
 
 #[derive(Serialize)]
 pub struct IndexData {
+    pub doc_title: String,
     pub posts: Vec<models::Post>,
 }
 
@@ -52,6 +53,4 @@ impl Template {
 }
 
 #[cfg(test)]
-mod tests {
-
-}
+mod tests {}

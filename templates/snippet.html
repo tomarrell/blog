@@ -1,6 +1,7 @@
 {{#each posts}}
 <div class="snippet">
-  <h2>{{ title }}</h2>
+  <h3 class="snippet-title">{{ title }}</h3>
+  <p class="snippet-date">{{ date }}</p>
   <p>{{ description }}</p>
   <button onClick="window.location.href='/post/{{id}}'">View more</button>
   <hr />

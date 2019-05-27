@@ -1,7 +1,7 @@
-use std::cmp::{Ord, PartialOrd, Ordering};
+use std::cmp::{Ord, Ordering, PartialOrd};
 
-use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
 pub struct TomlPost {
@@ -13,6 +13,7 @@ pub struct TomlPost {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct Post {
+    pub doc_title: String,
     pub id: String,
     pub title: String,
     pub date: DateTime<Utc>,

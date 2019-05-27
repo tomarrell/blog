@@ -3,7 +3,7 @@ html {
 }
 
 .header {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .content {
@@ -13,6 +13,15 @@ html {
 
 .snippet {
   margin-bottom: 2rem;
+}
+
+.snippet-title {
+  margin: 0;
+}
+
+.snippet-date {
+  color: #aaa;
+  margin-bottom: 1rem;
 }
 
 hr {

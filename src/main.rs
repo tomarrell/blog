@@ -25,7 +25,10 @@ fn index(req: &HttpRequest<AppState>) -> impl Responder {
     posts.reverse();
 
     utils::respond(
-        req.state().tpl.index(templates::IndexData { posts }),
+        req.state().tpl.index(templates::IndexData {
+            posts,
+            doc_title: "Tom's Blog".to_string(),
+        }),
         http::StatusCode::OK,
     )
 }
@@ -91,7 +94,8 @@ fn main() {
             .resource("/", |r| r.method(http::Method::GET).f(index))
             .resource("/post/{name}", |r| r.method(http::Method::GET).f(post))
             .resource("/favicon.ico", |r| {
-                r.method(http::Method::GET).f(file(Path::new("./public/favicon.ico").to_path_buf()))
+                r.method(http::Method::GET)
+                    .f(file(Path::new("./public/favicon.ico").to_path_buf()))
             })
             .handler("/public", fs::StaticFiles::new("./public").unwrap())
             .default_resource(|r| r.f(not_found))
