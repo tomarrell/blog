@@ -20,7 +20,9 @@ struct AppState {
 }
 
 fn index(req: &HttpRequest<AppState>) -> impl Responder {
-    let posts = parser::parse_posts_dir(Path::new(CONTENT_DIR));
+    let mut posts = parser::parse_posts_dir(Path::new(CONTENT_DIR));
+
+    posts.reverse();
 
     utils::respond(
         req.state().tpl.index(templates::IndexData { posts }),
@@ -32,7 +34,7 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
     let post_name = match req.match_info().get("name") {
         Some(x) => x,
         None => {
-            error!("No post name param supllied");
+            error!("No post name param supplied");
             return utils::respond_with_error("No post name supplied in path");
         }
     };
@@ -49,7 +51,10 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
     let raw_post = match parser::parse_post(&path) {
         Ok(post) => post,
         Err(_) => {
-            error!("Failed to find post at path: {}", path.to_str().unwrap_or("// Failed"));
+            error!(
+                "Failed to find post at path: {}",
+                path.to_str().unwrap_or("// Failed")
+            );
             return utils::respond(req.state().tpl.not_found(), http::StatusCode::NOT_FOUND);
         }
     };
@@ -59,10 +64,7 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
         ..raw_post
     };
 
-    utils::respond(
-        req.state().tpl.post(rendered_post),
-        http::StatusCode::NOT_FOUND,
-    )
+    utils::respond(req.state().tpl.post(rendered_post), http::StatusCode::OK)
 }
 
 fn not_found(req: &HttpRequest<AppState>) -> impl Responder {
@@ -126,6 +128,7 @@ mod tests {
         templates.register_templates();
 
         let resp = test::TestRequest::with_state(AppState { tpl: templates })
+            .param("name", "halle_leipzig")
             .run(&post)
             .unwrap();
 
