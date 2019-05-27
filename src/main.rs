@@ -1,7 +1,7 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use actix_web::middleware::Logger;
-use actix_web::{fs, http, server, App, HttpRequest, Responder};
+use actix_web::{fs, http, server, App, HttpRequest, Responder, Result};
 use comrak::{markdown_to_html, ComrakOptions};
 use log::*;
 use pretty_env_logger;
@@ -71,6 +71,10 @@ fn not_found(req: &HttpRequest<AppState>) -> impl Responder {
     utils::respond(req.state().tpl.not_found(), http::StatusCode::NOT_FOUND)
 }
 
+fn file(path: PathBuf) -> impl Fn(&HttpRequest<AppState>) -> Result<fs::NamedFile> {
+    move |_| Ok(fs::NamedFile::open(path.clone())?)
+}
+
 fn main() {
     pretty_env_logger::init_timed();
 
@@ -86,6 +90,9 @@ fn main() {
             .middleware(Logger::new(LOGGER_FORMAT))
             .resource("/", |r| r.method(http::Method::GET).f(index))
             .resource("/post/{name}", |r| r.method(http::Method::GET).f(post))
+            .resource("/favicon.ico", |r| {
+                r.method(http::Method::GET).f(file(Path::new("./public/favicon.ico").to_path_buf()))
+            })
             .handler("/public", fs::StaticFiles::new("./public").unwrap())
             .default_resource(|r| r.f(not_found))
     })
