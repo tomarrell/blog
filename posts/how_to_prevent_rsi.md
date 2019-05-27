@@ -2,11 +2,11 @@ This is the story about how I solved my increasing problem with wrist pain. **TL
 
 RSI, or repetitive strain injury, is a pretty terrifying reality to confront as a programmer. It makes typing painful, long stretches of doing your job less than enjoyable. Noone wants that.
 
-While working at a previous company, I began to feel discomfort after typing for long stretches. At first I thought nothing of it. It'll go away on it's own. But it didn't go away. It kept creeping in during long sessions. It would force me to stop, stretch my hands, and not want to return them to the keyboard. Not a great thing when your job is to press those keys in front of you.
+While working at a previous company, I began to feel discomfort after typing for long stretches. At first I thought nothing of it. It'll go away on it's own. But it didn't go away. It kept creeping in during my days at work and at home.
 
 Now I'm certainly not the first person to have this problem. There are [plenty](https://blog.evanweaver.com/2012/09/05/a-programmers-guide-to-healing-rsi/) of [people](https://mdlayher.com/blog/a-programmers-journey-with-rsi/) that have [similar issues](https://julie.io/writing/beating-programmers-rsi/). Various solutions are discussed that are certainly useful. But I found the single solution to my issue to be simply building a keyboard that was designed for typing.
 
-![](https://imgur.com/fbqTfma.jpg)
+![Old typewriter](https://imgur.com/fbqTfma.jpg)
 Goodbye old friend.
 
 ## Choosing the layout
@@ -17,7 +17,7 @@ Looking at commercial options, the [Ergodox](https://ergodox-ez.com/) was an att
 
 I had a very cool colleague named Dmitry, who I had seen using a very interesting keyboard called the Kinesis Advantage.
 
-![](https://imgur.com/XLyfMaf.jpg)
+![Kinesis Advantage, Dmitry's weapon of choice](https://imgur.com/XLyfMaf.jpg)
 
 This was the first time I had seen a *welled* layout. 
 
@@ -92,7 +92,7 @@ You can see the columns in blue, and the beginning of the rows, in black. The th
 
 The firmware essentially handles the scanning of the pins, the translation of the matrix into a keycode using a mapping, and then the communication with the machine the keyboard is plugged into. After screwing around writing a custom scanning implementation in Rust, and having something that worked but certainly lacking useful features, I opted for customizing the fantastic [QMK Firmware](https://github.com/qmk/qmk_firmware). 
 
-My implementation can be found over on my Github as a [fork](https://github.com/tomarrell/qmk_firmware).
+My implementation can be found over on my Github [fork](https://github.com/tomarrell/qmk_firmware).
 
 The mapping I now use underwent a few iterations. This is a fantastic process. Having almost unlimited possibilities, and being able to choose exactly the placement of every piece of functionality. My strong recommendation is to start from scratch. Give yourself only letters to begin with. Iterate quickly. When you find yourself not being able to do something, add it to your config. Take notes of the things you wish you could have done in a single keypress, and add those as well. Each time you run into a new missing key, think about its placement, and then place it somewhere that fits exactly the use case you need it for.
 
@@ -100,5 +100,27 @@ This process takes a bit of experimentation, and you won't get it right the firs
 
 ## The final product
 
+With the whole thing wired up and the firmware flashed, it was ready for use. 
 
+I opted for unlabelled keycaps. This made it easier to quickly change the layout in software without having to worry about whether I had a keycap for that. It may be challenging at first, but an easy way to learn your layout is to have a printout to refer to until you master it. This took around 2 weeks for me, and then I was able to get rid of the sheet.
+
+Now I don't recommend using this as your daily driver at work right away. You would probably annoy the other members of your team when your productivity suffers, unless you have extremely forgiving teammates. I found a really useful way to practice was to play this [game](https://zty.pe/) for around 1/2 hour each day after work. This quickly built muscle memory with the new ortholinear layout.
+
+![Left half](https://imgur.com/8db9sDG.jpg)
+
+Now you've probably spotted the dangling controller. This was the butchered modification to the model that I mentioned earlier. As it turned out, my measurements didn't leave quite enough margin with the wires soldered in the pins. Now this could certainly be improved simply by making more room in the case. I did plan to do this in fact, but after plugging it in and having the LED's light up amongst the mess of cables. It felt... unique. I decided that I would save the internal controller for V2.
+
+![Final keyboard](https://imgur.com/qhBomwn.jpg)
+
+As far as durability goes--I've so far only had to make 2 repairs to the board in over a year of daily use. The first was during transport from my home to the office, a cable snapped at its solder joint. And secondly, while transporting it in check-in luggage from New Zealand to Germany in between two frying pans, the compression on the bag snapped one of the legs. Nothing that a bit of solder and some superglue couldn't fix.
+
+But now begs the most important question. *Did all this effort solve my hand pain problems*?
+
+Yep. Surprisingly it did. The research and effort paid off. I am yet to have any of the recurring pain in my hand since I switched to using my custom built keyboard. This fact makes the process even more satisfying.
+
+Now I am not a doctor, but if the above is anything to go by, I would expect RSI to set in at least later on down the line using this bad boy over the keyboards I've used in the past. Of course, this is totally anecdotal. But certainly something to consider if nothing you've tried in the past has worked, and you're too stubborn to stop doing what you like as I am.
+
+![Keyboard with wrist rests](https://imgur.com/R2ETBjn.jpg)
+
+I also found using hacky sacks to make incredibly good wrist rests, as the keyboard does sit a little high off the table. They double as a distraction to anyone walking past my desk as well.
 
