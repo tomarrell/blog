@@ -1,3 +1,10 @@
+# Info
+title = "How to Prevent RSI"
+date = "2019-05-27T04:17:10Z"
+description = "The process of how I built myself a keyboard specifically to delay the onset of RSI"
+
+# Content
+content = """
 This is the story about how I solved my increasing problem with wrist pain. **TLDR, *I built a keyboard***. And yes, I am crazy enough to rely on it at work as well. This is going to act as somewhat of a build overview.
 
 RSI, or repetitive strain injury, is a pretty terrifying reality to confront as a programmer. It makes typing painful, long stretches of doing your job less than enjoyable. No one wants that.
@@ -123,4 +130,4 @@ Now I am not a doctor, but if the above is anything to go by, I would expect RSI
 ![Keyboard with wrist rests](https://imgur.com/R2ETBjn.jpg)
 
 I also found using hacky sacks to make incredibly good wrist rests, as the keyboard does sit a little high off the table. They double as a distraction to anyone walking past my desk as well. I got them from a [company](https://seapa.co.nz/) local to NZ which supplies ethically made hackys which work fantastically. 
-
+"""
