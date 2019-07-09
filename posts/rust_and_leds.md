@@ -25,60 +25,74 @@ The Raspberry Pi does have built in hardware PWM. However I wanted to make it a 
 ## Bit Banging
 Bit banging is the process of handling all aspects of serial communication in software rather than dedicated hardware. This is really only possible when you have complete control over what is running on the processor. Timing is incredibly important, and if you're managing clock signals in software and suddenly the OS jumps in to handle an interrupt, your program is probably going to miss its slot.
 
-Experimenting with bit banging on the Raspberry Pi to the WS2812bs made it pretty evident. Trying to bit bang from user space on top of the Linux Kernel, even without a garbage collector in your binary, is just not feasible. The panel would spark to life at times, giving a pretty garbled display of colors from time to time, but its lack of precision timing meant that another solution had to be found for this experiment.
+Experimenting with bit banging on the Raspberry Pi to the WS2812b's made it pretty evident. Trying to bit bang from user space on top of the Linux Kernel, even without a garbage collector in your binary, is just not feasible. The panel would spark to life at times, giving a pretty garbled display of colors from time to time, but its lack of precision timing meant that another solution had to be found for this experiment to get anything showing reliably.
 
 ## SPI?
 So with bit banging off the table, I had a look to another relatively simple serial protocol (...interface), [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface). SPI is a chainable serial protocol, who's bus specifies 4 logic signals:
 
-- SCLK: the clock signal
-- MOSI: master ouput, slave input
-- MISO: master input, slace ouput
-- SS: slave select
+- **SCLK**: the clock signal
+- **MOSI**: master ouput, slave input **&#8592; What we'll be using**
+- **MISO**: master input, slave ouput
+- **SS**: slave select
 
-Now this is relatively.
+Of the above pinout, we'll only be using the **MOSI** pin. This is because we don't need to transmit timing data to any other device (SCLK), nor do we need to receive any data from our panel (MISO), nor will we be chaining multiple SPI devices together (SS).
 
+Now taking a look at the duties of the PWM signal we need to send, we can approximate the highs and lows to some multiple of `1/3`. This means that if we run a MOSI SPI signal at triple the frequency the lights expect, then we can send a single WS2812b "panel bit" using a combination of 3 SPI bits.
+
+e.g. To send a 1 to the panel, we could instead bit-bang 110 over SPI at triple the 800KHz frequency.
+
+This would give us rough timings of 416.67ns per SPI bit, and overall 1,250ns for the entire panel bit. This sits neatly within the tolerances for the high and low sections for both a panel 1 and 0.
+
+To get a better idea of how the panel bits are represented, I've drawn up a basic diagram to help get a picture of what's going on.
+
+## Specs
 The LEDs run with a scan frequency of no less than `400Hz`, with a data transfer rate of `800kbps`.
 
 The traditional method of communication with the WS2812b is usually PWM. The duty cycle to send a single bit is:
 
-| Bit  | Time High | Time Low | Duty % |
-| ---- | --------- | -------- | ------ |
-| 0    | 0.4us     | 0.85us   | 32%    |
-| 1    | 0.8us     | 0.45us   | 64%    |
+| Bit | Time High | Time Low | Duty %     |
+|-----|-----------|----------|------------|
+| 0   | 0.4us     | 0.85us   | 32% ~= 33% |
+| 1   | 0.8us     | 0.45us   | 64% ~= 66% |
+
 
 A visual of the protocol is below.
 
+##### Panel bit: 0
 ```
-PWM LED (0): where
-    on time  = 0.4us +/-150ns
-    off time = 0.85us +/-150ns
-    
+on time  = 0.40us +/-150ns
+off time = 0.85us +/-150ns
+
 Volts
     |    START                      END
     |    v                          v
-    |    ----------
-    |    |        |
-    |    |        |
-    |    |        |
-    | ----        -------------------
+  1 |    +---------+
+    |    |         |
+    |    |         |
+    |    |         |
+  0 | ---+         +-----------------
     *-------------------------------- Time
-    
-PWM LED (1): where
-   on time  = 0.8us +/-150ns
-   off time = 0.45us +/-150ns
-   
-Volts
-    |    START                      END
-    |    v                          v
-    |    ------------------
-    |    |                |
-    |    |                |
-    |    |                |
-    | ----                -----------
-    *-------------------------------- Time
+         0       0.33               1
 ```
 
-Looking at the above duty cycle lengths, we can approximate each time slice into another 3 periods, each **33%** of the original wavelength in order to have constant high/low runs for the given period. This will allow us to continue using SPI, using a clock speed of approximately `3Mhz`.
+##### Panel bit: 1
+```
+on time  = 0.80us +/-150ns
+off time = 0.45us +/-150ns
+
+Volts
+    |    START                      END
+    |    v                          v
+  1 |    +-----------------+
+    |    |                 |
+    |    |                 |
+    |    |                 |
+  0 | ---+                 +---------
+    *-------------------------------- Time
+         0               0.66       1
+```
+
+Looking at the periods above, it becomes more clear why we can approximate the signal into 3 periods.
 
 To interact over SPI, each traditional LED sequence (3 bytes, 8 bits per colour channel) needs to be converted to a 9 byte sequence (72 bits per colour channel) before being shifted over SPI. Each traditional PWM 'bit' gets turned into an equivalent 3 SPI bits, and the clock speed of the SPI interface set to achieve within the `+/-150ns` error margins.
 
