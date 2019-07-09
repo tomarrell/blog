@@ -1,3 +1,10 @@
+# Info
+title = "Rust, a Raspberry Pi and Addressable LED's"
+date = "2019-07-09T16:40:57+0200"
+description = "An overview of using SPI bit-banging in Rust on the Raspberry Pi to control a matrix of WS2812b LED's."
+
+# Content
+content = """
 # Rust + Raspberry Pi + WS2812b LED's
 
 Back while I was living in New Zealand, I had a fair number of electronics projects on the go. This was one such project.
@@ -108,4 +115,4 @@ The bulk of the implementation was defining the colors, parsing them into bytes,
 ![Pixel Mario](/public/images/rust_and_leds/mario.jpg)
 
 ![Pixel Mario 2](/public/images/rust_and_leds/mario.jpg)
-
+"""
