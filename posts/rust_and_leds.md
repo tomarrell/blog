@@ -4,7 +4,7 @@ Back while I was living in New Zealand, I had a fair number of electronics proje
 
 I'd been playing around with a couple of LED matrices bought from AliExpress. The LED's on one of the matrices were the very popular **WS2812b** variant. These panels are made up of addressable RGB LED's soldered to a flexible PCB, giving you three wires out the back -- `data`, `5V`, and `ground`.
 
-After not being able to find a Rust library which supported these things, I decided I would instead learn the protocol and write one myself. This is a brief overview of that experience.
+After not being able to find a Rust library which supported these things at the time (a few have popped up since), I decided I would instead learn the protocol try to fiddle with it myself. This is a brief overview of that experience.
 
 ## The plan
 The original plan was to have this thing running from an ARM microcontroller. Specifically a spin-off of the Sparkfun Pro Micro, running an ARM Cortex M processor. The methods below would certainly work for in that case, but for ease of the toolchain and build process I decided to prototype this with an old Raspberry Pi I had sitting around.
@@ -92,17 +92,19 @@ Volts
          0               0.66       1
 ```
 
-Looking at the periods above, it becomes more clear why we can approximate the signal into 3 periods.
+Looking at the periods above, it becomes more clear why we can approximate the signal into 3 distinct periods, the first period always being 1, the second being the distinguishing bit, and the last always being 0.
 
-To interact over SPI, each traditional LED sequence (3 bytes, 8 bits per colour channel) needs to be converted to a 9 byte sequence (72 bits per colour channel) before being shifted over SPI. Each traditional PWM 'bit' gets turned into an equivalent 3 SPI bits, and the clock speed of the SPI interface set to achieve within the `+/-150ns` error margins.
+We are then able to encode our color channels, 3 bytes per channel, over 3 channels, totally 72 bits (9 bytes) that we need to feed down the MOSI line in order to write a color to a single LED. We can do this repeatedly and have each subsequent 9 bytes passed on to the next LED until we hold the line low for at least `50us`.
 
-With the traditional period broken into 3 time sections, each can be pulled high or low individually. We can therefore represent what would have been a PWM (1) with an SPI `110`. And on the contrary, represent a PWM (0) with an SPI `100`.
+## Implementation
+The very rushed [code](https://github.com/tomarrell/rasp-ws2812b/blob/master/src/main.rs) to make this work is surprisingly minimal thanks to the fantastic library [rppal](https://github.com/golemparts/rppal) written by [@golemparts](https://twitter.com/golemparts) for controlling the Raspberry Pi's SPI ports using the Linux Kernel's [SPI device interface](https://www.kernel.org/doc/Documentation/spi/spidev).
 
-## Example
+The bulk of the implementation was defining the colors, parsing them into bytes, and then translating each bit to an SPI equivalent bit to then be written to the SPI buffer and sent to the LED's.
+
+## Demo
 An example of a Raspberry Pi controlling a flexible panel of WS2812b's:
 
 ![Image of Pixel Mario](https://imgur.com/14oSYYy.jpg)
 
-Power WS2812b LEDs from your Raspberry Pi over SPI. This library leverages the Raspberry Pi's SPI interface through Linux's IOCTL sys calls in order to emulate the data transfer method required by the WS2812b.
 
-**Note:** This is currently a heavy WIP. It is almost certainly unstable, and is subject to breaking changes.
+
