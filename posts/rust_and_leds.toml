@@ -20,6 +20,8 @@ The pinout of the Pi looks like so:
 
 ![Raspberry Pi Pinout](/public/images/rust_and_leds/pi_pinout.png)
 
+We are particularly interested in either pin 20, or pin 10. More on that later.
+
 ## WS2812b Data Protocol
 The WS2812b runs a protocol that can nicely be mapped to [Pulse Width Modulated](https://en.wikipedia.org/wiki/Pulse-width_modulation) (PWM) peaks with a frequency of `800,000Hz` or `800KHz`. We're able to encode a `1` using a duty cycle of approximately *66%*, and a `0` with a duty cycle of approximately *33%*.
 
