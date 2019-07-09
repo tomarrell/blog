@@ -62,8 +62,17 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
         }
     };
 
+    let render_options = ComrakOptions {
+        ext_table: true,
+        ext_tasklist: true,
+        ext_footnotes: true,
+        ext_superscript: true,
+        ext_strikethrough: true,
+        ..ComrakOptions::default()
+    };
+
     let rendered_post = models::Post {
-        content: markdown_to_html(&raw_post.content, &ComrakOptions::default()),
+        content: markdown_to_html(&raw_post.content, &render_options),
         ..raw_post
     };
 
