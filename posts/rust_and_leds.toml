@@ -25,7 +25,7 @@ The WS2812b runs a protocol that can nicely be mapped to [Pulse Width Modulated]
 
 The image here shows writing a series of `0`'s to the panel, indicated by the 1/3 high time followed by a 2/3 low time in the signal.
 
-![Oscilloscope](/public/images/rust_and_leds/oscilloscope.jpg)
+![Oscilloscope](/public/images/rust_and_leds/oscillo_wide.jpg)
 
 Using this, we need to send a buffer of 24 bits which is consumed by the next pixel in line. The 24 bits encode the red, green and blue hues for the consuming pixel. Once a pixel has consumed a buffer, it will forward any further bits along the chain until it receives a reset signal, where it will display its resulting hue.
 
