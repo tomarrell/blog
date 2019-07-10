@@ -11,6 +11,14 @@ html {
   margin: auto;
 }
 
+.content-title {
+  margin-bottom: 1rem;
+}
+
+.content-date {
+  color: #aaa;
+}
+
 .snippet {
   margin-bottom: 2rem;
 }
@@ -21,7 +29,7 @@ html {
 
 .snippet-date {
   color: #aaa;
-  margin-bottom: 1rem;
+  margin: 0.4rem 0 1rem;
 }
 
 hr {
