@@ -108,7 +108,7 @@ Looking at the periods above, it becomes more clear why we can approximate the s
 We are then able to encode our color channels, 3 bytes per channel, over 3 channels, totally 72 bits (9 bytes) that we need to feed down the MOSI line in order to write a color to a single LED. We can do this repeatedly and have each subsequent 9 bytes passed on to the next LED until we hold the line low for at least `50us`.
 
 ## Implementation
-The very unpolished [code](https://github.com/tomarrell/rasp-ws2812b/blob/master/src/main.rs) to make this work is surprisingly minimal thanks to the fantastic library [rppal](https://github.com/golemparts/rppal) written by [@golemparts](https://twitter.com/golemparts) for controlling the Raspberry Pi's SPI ports using the Linux Kernel's [SPI device interface](https://www.kernel.org/doc/Documentation/spi/spidev).
+The very unpolished [code](https://github.com/tomarrell/rasp-ws2812b/blob/master/src/main.rs) to make this work is surprisingly minimal, thanks to the fantastic library [rppal](https://github.com/golemparts/rppal), written by [@golemparts](https://twitter.com/golemparts). It allows for controlling the Raspberry Pi's SPI ports using the Linux Kernel's [SPI device interface](https://www.kernel.org/doc/Documentation/spi/spidev) from Rust.
 
 The bulk of the implementation was defining the colors, parsing them into bytes, and then translating each bit to an SPI equivalent bit to then be written to the SPI buffer and sent to the LED's.
 
