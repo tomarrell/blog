@@ -1,7 +1,9 @@
 use std::error::Error;
 
-use handlebars::Handlebars;
+use handlebars::{Handlebars, handlebars_helper};
 use serde::Serialize;
+use chrono::DateTime;
+use log::*;
 
 use crate::models;
 
@@ -15,10 +17,39 @@ pub struct IndexData {
     pub posts: Vec<models::Post>,
 }
 
+// Return the ordinal indicator for the day
+// of the month given a DateLike.
+fn day_ordinal_indicator<'a, T>(date: &'a T) -> &'a str
+    where T: chrono::Datelike
+{
+    match date.day() {
+        1 | 21 | 31 => "st",
+        2 | 22 => "nd",
+        3 | 23 => "rd",
+        _ => "th",
+    }
+}
+
+handlebars_helper!(fmt_date: |v: str| {
+    let date = match DateTime::parse_from_rfc3339(v) {
+        Ok(d) => {
+            let ord = day_ordinal_indicator(&d);
+            d.format(&format!("%e{} %B %Y", ord)).to_string()
+        },
+        Err(_) => {
+            error!("failed to parse time from post");
+            "N/A".to_string()
+        },
+    };
+
+    date
+});
+
 impl Template {
     pub fn new() -> Template {
         let mut handlebars = Handlebars::new();
         handlebars.set_strict_mode(true);
+        handlebars.register_helper("fmt-date", Box::new(fmt_date));
 
         Template { hb: handlebars }
     }

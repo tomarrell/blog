@@ -322,6 +322,8 @@ pre > code {
 
 /* Tables
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+table {
+  margin: auto; }
 th,
 td {
   padding: 12px 15px;
