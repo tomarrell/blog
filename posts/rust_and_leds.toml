@@ -70,38 +70,10 @@ The traditional method of communication with the WS2812b is usually PWM. The dut
 A visual of the protocol is below.
 
 ### Panel bit: 0
-```
-on time  = 0.40us +/-150ns
-off time = 0.85us +/-150ns
-
-Volts
-    |    START                      END
-    |    v                          v
-  1 |    +---------+
-    |    |         |
-    |    |         |
-    |    |         |
-  0 | ---+         +-----------------
-    *-------------------------------- Time
-         0       0.33               1
-```
+![Panel bit 0 timing](/public/images/rust_and_leds/spi_signal_0.jpg)
 
 ### Panel bit: 1
-```
-on time  = 0.80us +/-150ns
-off time = 0.45us +/-150ns
-
-Volts
-    |    START                      END
-    |    v                          v
-  1 |    +-----------------+
-    |    |                 |
-    |    |                 |
-    |    |                 |
-  0 | ---+                 +---------
-    *-------------------------------- Time
-         0               0.66       1
-```
+![Panel bit 1 timing](/public/images/rust_and_leds/spi_signal_1.jpg)
 
 Looking at the periods above, it becomes more clear why we can approximate the signal into 3 distinct periods, the first period always being `1`, the second being the distinguishing bit, and the last always being `0`.
 
