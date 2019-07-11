@@ -13,7 +13,6 @@ pub struct Template {
 
 #[derive(Serialize)]
 pub struct IndexData {
-    pub doc_title: String,
     pub posts: Vec<models::Post>,
 }
 
@@ -48,7 +47,6 @@ handlebars_helper!(fmt_date: |v: str| {
 impl Template {
     pub fn new() -> Template {
         let mut handlebars = Handlebars::new();
-        handlebars.set_strict_mode(true);
         handlebars.register_helper("fmt-date", Box::new(fmt_date));
 
         Template { hb: handlebars }

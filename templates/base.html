@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <head>
-  <title>{{ doc_title }}</title>
+  {{#if title }}
+    <title>Tom's Blog - {{ title }}</title>
+  {{else}}
+    <title>Tom Arrell's Blog</title>
+  {{/if}}
 
   <meta charset="utf-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {{#if description }}
+    <meta name="description" content="{{ description }}" />
+    <meta property="og:description" content="{{ description }}" />
+  {{else}}
+    <meta name="description" content="Tom Arrell's blog. Tom is a Software Engineer who writes about programming, embedded and electrical projects, and life." />
+    <meta property="og:description" content="Tom Arrell's blog. Tom is a Software Engineer who writes about programming, embedded and electrical projects, and life." />
+  {{/if}}
 
   <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="/public/skeleton.css" />

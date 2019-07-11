@@ -13,7 +13,6 @@ pub struct TomlPost {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct Post {
-    pub doc_title: String,
     pub id: String,
     pub title: String,
     pub date: DateTime<Utc>,

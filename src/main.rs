@@ -27,7 +27,6 @@ fn index(req: &HttpRequest<AppState>) -> impl Responder {
     utils::respond(
         req.state().tpl.index(templates::IndexData {
             posts,
-            doc_title: "Tom's Blog".to_string(),
         }),
         http::StatusCode::OK,
     )

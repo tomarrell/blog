@@ -40,7 +40,6 @@ pub fn parse_post(path: &Path) -> Result<Post, Box<dyn Error>> {
     Ok(Post {
         id: stem,
         title: parsed.title.clone(),
-        doc_title: format!("{} - {}", "Tom's Blog", parsed.title),
         date: parsed.date,
         description: parsed.description,
         content: parsed.content,
@@ -62,7 +61,6 @@ mod tests {
             vec![Post {
                 id: "test".to_string(),
                 title: "TestName".to_string(),
-                doc_title: format!("{} - {}", "Tom's Blog", "TestName"),
                 date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
                 description: "Test description".to_string(),
                 content: "Test content".to_string(),
@@ -80,7 +78,6 @@ mod tests {
             Post {
                 id: "test".to_string(),
                 title: "TestName".to_string(),
-                doc_title: format!("{} - {}", "Tom's Blog", "TestName"),
                 date: Utc.ymd(1970, 1, 1).and_hms(0, 0, 0),
                 description: "Test description".to_string(),
                 content: "Test content".to_string(),
