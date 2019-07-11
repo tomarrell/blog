@@ -25,9 +25,7 @@ fn index(req: &HttpRequest<AppState>) -> impl Responder {
     posts.reverse();
 
     utils::respond(
-        req.state().tpl.index(templates::IndexData {
-            posts,
-        }),
+        req.state().tpl.index(templates::IndexData { posts }),
         http::StatusCode::OK,
     )
 }
@@ -104,6 +102,10 @@ fn main() {
             .resource("/favicon.ico", |r| {
                 r.method(http::Method::GET)
                     .f(file(Path::new("./public/favicon.ico").to_path_buf()))
+            })
+            .resource("/sitemap.xml", |r| {
+                r.method(http::Method::GET)
+                    .f(file(Path::new("./sitemap.xml").to_path_buf()))
             })
             .handler("/public", fs::StaticFiles::new("./public").unwrap())
             .default_resource(|r| r.f(not_found))

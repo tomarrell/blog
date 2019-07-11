@@ -19,6 +19,9 @@ start: build
 monitor:
 	 tail -f log.txt | cat
 
+sitemap:
+	sitemap-generator http://blog.tomarrell.com
+
 # Requires installation of https://github.com/sharkdp/bat
 # Comes with nice syntax highlighting
 monitor-bat:
