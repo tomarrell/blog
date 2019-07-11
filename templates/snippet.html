@@ -3,7 +3,7 @@
   <h3 class="snippet-title">{{ title }}</h3>
   <p class="snippet-date">{{ fmt-date date }}</p>
   <p>{{ description }}</p>
-  <button onClick="window.location.href='/post/{{id}}'">View more</button>
+  <a href="/post/{{id}}" class="button">View more</a>
   <hr />
 </div>
 {{/each}}
