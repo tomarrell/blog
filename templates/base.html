@@ -35,3 +35,20 @@ fathom('set', 'siteId', 'NRQJR');
 fathom('trackPageview');
 </script>
 
+<!-- Okapi Analytics -->
+<script>
+ (function (o, k, a, p, i) {
+   o[p] = o[p] || function ()
+   { (o[p].queue = o[p].queue || []).push(arguments); }; var e = k.createElement(i);
+   var firstScript = k.getElementsByTagName(i)[0]; e.async = 1; e.src = a;
+   firstScript.parentNode.insertBefore(e, firstScript);
+ })(window, document,
+   '//okapianalytics.com/zeug.js',
+   'okapi', 'script');
+ okapi('set', 'tokenId', '3293ee5f-f1d6-43f7-b818-a707d0dccd72');
+ okapi('set', 'trackerApiUrl', '//okapianalytics.com/api/collect' );
+ okapi('trackPageView');
+</script>
+<!-- End Okapi Analytics -->
+
+
