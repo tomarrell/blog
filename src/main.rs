@@ -63,7 +63,6 @@ fn post(req: &HttpRequest<AppState>) -> impl Responder {
         ext_table: true,
         ext_tasklist: true,
         ext_footnotes: true,
-        ext_superscript: true,
         ext_strikethrough: true,
         ..ComrakOptions::default()
     };

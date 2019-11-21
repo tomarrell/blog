@@ -1,11 +1,11 @@
 # Info
 title = "Plane on a Treadmill"
-date = "2019-11-06T01:44:10+0200"
+date = "2019-11-21T22:57:04+0200"
 description = "Would a plane take off on a treadmill?"
 
 # Content
 content = """
-**An interesting thought experiment.**
+**An interesting thought experiment...**
 
 Imagine in a frictionless environment, you have a plane on a runway sized treadmill. The plane sits at the beginning of the treadmill, as if prepared for a traditional takeoff.
 
@@ -27,7 +27,7 @@ Absolutely. If you attempted the same thing in a car, you'd sit dead still given
 
 Therefore any work that the car does, will be counteracted by the treadmill's reverse movement.
 
-**Plane:** Now back to the plane. The trick to making this intuitive is to now compare the plane to a skateboard on a regular sized treadmill. Imagine someone was standing next to the treadmill, holding the skateboard in place on the treadmill. Now imagine we start the treadmill. What would you expect to happen? Hopefully you said that the skateboard would stay in the position that the person was holding it in, with the wheels spinning below it. Should the person begin to move the skateboard forwards (i.e. apply a forward thrust), the skateboard wheels would spin proportional to \(\sqrt{V_t^2 + V_f^2}\). Where \(V_t\) is the velocity of the treadmill, and \(V_f\) is the velocity of the plane's movement.
+**Plane:** Now back to the plane. The trick to making this intuitive is to now compare the plane to a skateboard on a regular sized treadmill. Imagine someone was standing next to the treadmill, holding the skateboard in place on the treadmill. Now imagine we start the treadmill. What would you expect to happen? Hopefully you said that the skateboard would stay in the position that the person was holding it in, with the wheels spinning below it. Should the person begin to move the skateboard forwards (i.e. apply a forward thrust), the skateboard wheels would spin proportional to &bsol;(&bsol;sqrt{V_t^2 + V_f^2}&bsol;). Where &bsol;(V_t&bsol;) is the velocity of the treadmill, and &bsol;(V_f&bsol;) is the velocity of the plane's movement.
 
 The same thing happens with the plane. It would take off just fine. This is because in a zero friction environment, none of the backwards movement of the treadmill would be transmitted to the plane itself. Again, assuming that the wheel bearings are perfect.
 
