@@ -1,0 +1,39 @@
+# Info
+title = "Plane on a Treadmill"
+date = "2019-11-06T01:44:10+0200"
+description = "Would a plane take off on a treadmill?"
+
+# Content
+content = """
+**An interesting thought experiment.**
+
+Imagine in a frictionless environment, you have a plane on a runway sized treadmill. The plane sits at the beginning of the treadmill, as if prepared for a traditional takeoff.
+
+However, instead of rolling forward as usual, as the plane begins to move--the treadmill moves backwards to match it. This happens perpetually. As the plane picks up forward velocity, the treadmill detects this and accelerates in the opposite direction.
+
+*So what happens? Does the plane take off? Or remain in the same place, engines roaring?*
+
+Now bear with me, as I try to explain it to hopefully help you build a bit of an intuitive understanding.
+
+**Plane:** Ask yourself. What is the thrust mechanism in an aeroplane? Well that's rather obvious, right? The engines. But a bit more specifically, the engines spinning and accelerating hot air out behind them, generating forwards thrust. The medium here is important. The plane pulls itself through the **air**.
+
+**Car:** Now let's switch briefly to a car, so we can dispell the possibly more intuitive thought process.
+
+> Well if you drove a car on a treadmill that was moving backwards, you would need to drive even faster to overcome it! If you couldn't, you'd move backwards, right?
+
+Absolutely. If you attempted the same thing in a car, you'd sit dead still given both the car's forward velocity and the velocity of the treadmill were exactly opposite. However theres a subtle difference. The car propells itself across the ground. Without losing traction, it's wheels are attached to the ground, and also connected to the driveshaft, which is connected to the engine. The engine. The thrust generation for the car, which also happens to be attached to the ground beneath it. This is where the car situation differs from that of the plane.
+
+*The car's thrust mechanism is fundamentally attached to the treadmill below it.*
+
+Therefore any work that the car does, will be counteracted by the treadmill's reverse movement.
+
+**Plane:** Now back to the plane. The trick to making this intuitive is to now compare the plane to a skateboard on a regular sized treadmill. Imagine someone was standing next to the treadmill, holding the skateboard in place on the treadmill. Now imagine we start the treadmill. What would you expect to happen? Hopefully you said that the skateboard would stay in the position that the person was holding it in, with the wheels spinning below it. Should the person begin to move the skateboard forwards (i.e. apply a forward thrust), the skateboard wheels would spin proportional to \(\sqrt{V_t^2 + V_f^2}\). Where \(V_t\) is the velocity of the treadmill, and \(V_f\) is the velocity of the plane's movement.
+
+The same thing happens with the plane. It would take off just fine. This is because in a zero friction environment, none of the backwards movement of the treadmill would be transmitted to the plane itself. Again, assuming that the wheel bearings are perfect.
+
+Even in our non-frictionless, real-world, the plane would still take off. Sure it would require a little more thrust from the engines than it would have on a regular runway. However this amount would only be to overcome the resistant force of friction in the wheel bearings. Assuming the bearings are relatively good quality and well lubricated, this would be almost negligible.
+
+Finally, with forward movement and a fluid (air) to force through its engines and over its wings to generate lift, the plane will have no problems rolling forwards and taking off as it usually would.
+
+So there you have it. A hopefully intuitive understanding about why a theoretical plane would be able to take off from a theoretical treadmill just fine. The plane pulls itself through the air, so the treadmill has no effect on its velocity through the wheel bearings. Unlike a car of course, who's wheels are attached to the entire drivetrain when in gear to go forwards.
+"""
