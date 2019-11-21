@@ -17,11 +17,11 @@ Now bear with me, as I try to explain it to hopefully help you build a bit of an
 
 **Plane:** Ask yourself. What is the thrust mechanism in an aeroplane? Well that's rather obvious, right? The engines. But a bit more specifically, the engines spinning and accelerating hot air out behind them, generating forwards thrust. The medium here is important. The plane pulls itself through the **air**.
 
-**Car:** Now let's switch briefly to a car, so we can dispell the possibly more intuitive thought process.
+**Car:** Now let's switch briefly to a car, so we can dispel the possibly more intuitive thought process.
 
 > Well if you drove a car on a treadmill that was moving backwards, you would need to drive even faster to overcome it! If you couldn't, you'd move backwards, right?
 
-Absolutely. If you attempted the same thing in a car, you'd sit dead still given both the car's forward velocity and the velocity of the treadmill were exactly opposite. However theres a subtle difference. The car propells itself across the ground. Without losing traction, it's wheels are attached to the ground, and also connected to the driveshaft, which is connected to the engine. The engine. The thrust generation for the car, which also happens to be attached to the ground beneath it. This is where the car situation differs from that of the plane.
+Absolutely. If you attempted the same thing in a car, you'd sit dead still given both the car's forward velocity and the velocity of the treadmill were exactly opposite. However there's a subtle difference. The car propels itself across the ground. Without losing traction, it's wheels are attached to the ground, and also connected to the drive shaft, which is connected to the engine. The engine. The thrust generation for the car, which also happens to be attached to the ground beneath it. This is where the car situation differs from that of the plane.
 
 *The car's thrust mechanism is fundamentally attached to the treadmill below it.*
 
@@ -35,5 +35,5 @@ Even in our non-frictionless, real-world, the plane would still take off. Sure i
 
 Finally, with forward movement and a fluid (air) to force through its engines and over its wings to generate lift, the plane will have no problems rolling forwards and taking off as it usually would.
 
-So there you have it. A hopefully intuitive understanding about why a theoretical plane would be able to take off from a theoretical treadmill just fine. The plane pulls itself through the air, so the treadmill has no effect on its velocity through the wheel bearings. Unlike a car of course, who's wheels are attached to the entire drivetrain when in gear to go forwards.
+So there you have it. A hopefully intuitive understanding about why a theoretical plane would be able to take off from a theoretical treadmill just fine. The plane pulls itself through the air, so the treadmill has no effect on its velocity through the wheel bearings. Unlike a car of course, who's wheels are attached to the entire drive train when in gear to go forwards.
 """
