@@ -19,6 +19,9 @@ start: build ## Start the server, with correctly routed logging
 monitor: ## Watch the log file
 	 tail -f log.txt | cat
 
+deploy: ## SSH's into remote server, pulls latest master, restarts the server
+	@echo TODO
+
 sitemap: ## Generate a sitemap
 	sitemap-generator http://blog.tomarrell.com
 
