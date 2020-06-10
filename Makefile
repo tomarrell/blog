@@ -22,6 +22,10 @@ monitor: ## Watch the log file
 deploy: ## SSH's into remote server, pulls latest master, restarts the server
 	@echo TODO
 
+push: ## Push the image to my personal docker registry with the git hash as the tag
+	docker build -t tomarrell/personal:blog-$$(git show -s --format=%h) .
+	docker push tomarrell/personal:blog-$$(git show -s --format=%h)
+
 # Requires installation of https://github.com/sharkdp/bat
 # Comes with nice syntax highlighting
 monitor-bat: ## Monitor the logs with bat

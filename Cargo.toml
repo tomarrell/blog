@@ -3,6 +3,9 @@ name = "blog"
 version = "0.1.0"
 authors = ["Tom Arrell <tom.arrell@gmail.com>"]
 edition = "2018"
+[[bin]]
+name = "blog"
+path = "src/main.rs"
 
 [dependencies]
 log = "0.4"
