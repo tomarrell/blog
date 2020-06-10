@@ -16,4 +16,4 @@ COPY ./posts /app/posts
 COPY ./public /app/public
 COPY ./templates /app/templates
 
-CMD ["/app/blog"]
+ENTRYPOINT ["/app/blog"]
