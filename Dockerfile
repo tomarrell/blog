@@ -9,7 +9,7 @@ COPY ./Cargo.toml /build/Cargo.toml
 RUN cargo build --release
 
 # Exec image
-FROM alpine:latest
+FROM rust:slim-buster
 
 COPY --from=builder /build/target/release/blog /app/blog
 COPY ./posts /app/posts
