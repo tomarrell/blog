@@ -11,6 +11,8 @@ RUN cargo build --release
 # Exec image
 FROM rust:slim-buster
 
+WORKDIR /app
+
 COPY --from=builder /build/target/release/blog /app/blog
 COPY ./posts /app/posts
 COPY ./public /app/public

@@ -25,6 +25,7 @@ deploy: ## SSH's into remote server, pulls latest master, restarts the server
 push: ## Push the image to my personal docker registry with the git hash as the tag
 	docker build -t tomarrell/personal:blog-$$(git show -s --format=%h) .
 	docker push tomarrell/personal:blog-$$(git show -s --format=%h)
+	echo "blog-$$(git show -s --format=%h)" | tr -d '\n' | pbcopy
 
 # Requires installation of https://github.com/sharkdp/bat
 # Comes with nice syntax highlighting
