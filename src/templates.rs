@@ -1,9 +1,9 @@
 use std::error::Error;
 
-use handlebars::{Handlebars, handlebars_helper};
-use serde::Serialize;
 use chrono::DateTime;
+use handlebars::{handlebars_helper, Handlebars};
 use log::*;
+use serde::Serialize;
 
 use crate::models;
 
@@ -19,7 +19,8 @@ pub struct IndexData {
 // Return the ordinal indicator for the day
 // of the month given a DateLike.
 fn day_ordinal_indicator<'a, T>(date: &'a T) -> &'a str
-    where T: chrono::Datelike
+where
+    T: chrono::Datelike,
 {
     match date.day() {
         1 | 21 | 31 => "st",
