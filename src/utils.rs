@@ -5,7 +5,7 @@ use actix_web::{http, HttpResponse};
 pub fn respond(tpl: Result<String, impl Error>, status: http::StatusCode) -> HttpResponse {
     match tpl {
         Ok(x) => respond_with_template(x.to_string(), status),
-        Err(e) => respond_with_error(e.description()),
+        Err(e) => respond_with_error(&e.to_string()),
     }
 }
 
