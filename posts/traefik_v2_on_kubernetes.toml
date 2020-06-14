@@ -204,8 +204,8 @@ The important part here is the list of arguments that we are passing to the
 application. These are passed to the pod in order to configure Traefik through
 the command line.
 
-You will need to add your email in the required field to provide to Let's
-Encrypt when issuing the certificates.
+You will need to replace the field `<YOUR_EMAIL>` with your own email address,
+which is used by Let's Encrypt when issuing certificates.
 
 The flag `--certificatesresolvers.default.acme.tlschallenge` will configure
 Traefik to ask for a `TLS-ALPN-01` challenge type from the ACME server. You will
