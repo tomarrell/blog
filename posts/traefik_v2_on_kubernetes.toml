@@ -141,7 +141,7 @@ However I would recommend for simple operation to use a DaemonSet, as it will
 automatically make sure that each node in your cluster has a single instance of
 the ingress controller.
 
-Create a new file called `daemon-set.yaml` that looks like the following.
+Create a new file called `daemon-set.yaml` which looks like the following:
 
 ```yaml
 kind: DaemonSet
