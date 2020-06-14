@@ -66,7 +66,7 @@ contains a list of resources which we will be deploying and the namespace
 specifies which Kubernetes namespace you would like it all deployed into. A nice
 little convenience feature is specifying the `commonLabels` object. This will
 apply label values across all the resources, including adding fields such as
-`selector.matchLabels` on the DaemonSet for example.
+`selector.matchLabels` on the DaemonSet, for example.
 
 #### RBAC
 
