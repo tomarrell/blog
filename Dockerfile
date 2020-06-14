@@ -14,8 +14,8 @@ FROM rust:slim-buster
 WORKDIR /app
 
 COPY --from=builder /build/target/release/blog /app/blog
-COPY ./posts /app/posts
 COPY ./public /app/public
 COPY ./templates /app/templates
+COPY ./posts /app/posts
 
 CMD ["/app/blog"]
