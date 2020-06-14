@@ -30,7 +30,7 @@ Requirements:
 ## Defining the Kustomize App
 
 Kustomize has been natively built into Kubectl since version `1.14`. This makes
-it nice and simple option to defining DRY Kubernetes manifests.
+it a nice and simple option for defining DRY Kubernetes manifests.
 
 Traefik version `2` introduced their new Kubernetes custom resource definition
 (CRD) which allows for more idiomatic configuration of your Ingress routes,
