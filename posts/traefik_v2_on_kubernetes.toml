@@ -127,6 +127,25 @@ Once applied, this will cause Kubernetes to generate an authentication token
 which will be used by the DaemonSet in order to authenticate with the Kubernetes
 API.
 
+Finally, to create the binding between the role and the ServiceAccount we will
+need a ClusterRoleBinding.
+
+In a new file, `cluster-role-binding.yaml` include the following:
+
+```yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller
+subjects:
+- kind: ServiceAccount
+  name: traefik-ingress-controller
+```
+
 
 #### DaemonSet
 
