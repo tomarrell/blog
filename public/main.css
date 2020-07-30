@@ -1,11 +1,74 @@
+/*
+ * Meta
+ */
 html {
   padding: 2rem 3rem;
 }
 
-.header {
-  margin-bottom: 3rem;
+h1 {
+  font-size: 24px;
 }
 
+/*
+ * Components
+ */
+
+.button {
+  font-weight: 400;
+  font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
+}
+
+hr {
+  width: 6rem;
+  margin-left: 0;
+}
+
+/*
+ * Header
+ */
+.header {
+  margin-bottom: 3rem;
+  float: left;
+  position: fixed;
+  text-align: right;
+}
+
+.header .title a {
+  color: black;
+  text-decoration: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.header .links a {
+  font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
+  margin-bottom: 15px;
+  display: block;
+  text-decoration: none;
+}
+
+.header .links a:hover {
+  text-decoration: underline;
+}
+
+.link-posts, .link-posts:hover {
+  color: #2FD27A;
+}
+.link-github, .link-github:hover {
+  color: #4D4848;
+}
+.link-twitter, .link-twitter:hover {
+  color: #1DA1F2;
+}
+.link-about, .link-about:hover {
+  color: #E02BF0;
+}
+
+/*
+ * Content
+ */
 .content {
   max-width: 800px;
   margin: auto;
@@ -32,11 +95,6 @@ html {
   margin: 0.4rem 0 1rem;
 }
 
-hr {
-  width: 6rem;
-  margin-left: 0;
-}
-
 .post-content {
   position: relative;
 }
@@ -45,10 +103,6 @@ hr {
   max-width: 100%;
 }
 
-.button {
-  font-weight: 400;
-  font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
-}
 
 /*
  * Fix the font-sizes of titles, they're a bit big...
