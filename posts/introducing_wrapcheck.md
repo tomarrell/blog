@@ -1,0 +1,253 @@
+# Extending Errors in Go
+
+*I've released a Go linter to check for the rule described in this post. You can
+find it here: [wrapcheck](https://github.com/tomarrell/wrapcheck)*
+
+<hr />
+
+> This is a small post covering error wrapping in Go that will build on the
+> [work from Dave Cheney](https://dave.cheney.net/tag/stacktrace).
+
+So recently, after spending more time than I should hunting down the source of
+an error, I sparked the discussion within my team at work about how we can cut
+down on the time to debug, specifically, by making sure that errors aren't
+handed back to the caller without forgetting to attach extra information.
+
+We already have a pretty good practice in place to wrap errors with additional
+info before we hand them up the stack, however this was missing in this
+particular case.
+
+Essentially, we were seeing something akin to:
+
+```log
+time="2020-08-04T11:36:27+02:00" level=error error="sql: no rows in result set"
+```
+
+...not *particularly* useful.
+
+To help with debugging here, it's important that additional information is
+attached to the error to give the developer more context.
+
+### Extending errors
+
+By now you've probably already heard the popular Go proverb of:
+
+> Don’t just check errors, handle them gracefully
+
+Handling an error in this case would be to add this additional information and
+pass it back up the stack. However, we're not just limited to that. If we take a
+closer look at what an error is in Go, we see the following interface.
+
+```go
+type Error interface {
+  Error() string
+}
+```
+
+Very simple, yet very powerful. However this power comes with many
+possibilities, and unfortunately many possibilities comes with no standard way
+of handling things. Ultimately, it is up to you to define what form of extension
+is most suitable for your application.
+
+An example is in Rob Pike's Upspin project. They use a custom error struct which looks
+like:
+
+```go
+type Error struct {
+    Path upspin.PathName
+    User upspin.UserName
+    Op  Op
+    Kind Kind
+    Err error
+}
+```
+
+You can read more about how exactly they use this error definition in a blog
+post they
+[published](https://commandcenter.blogspot.com/2017/12/error-handling-in-upspin.html).
+
+This is a bit intensive for many programs however, so we'll take a look at a
+less intense, more widely used method for adding information to errors, called
+wrapping.
+
+### Wrapping errors prior to Go `1.13`
+
+Go has had error wrapping since the introduction of the
+[`errors`](https://godoc.org/github.com/pkg/errors) package was introduced in
+early 2016.
+
+This shortly followed with the `errors.[New|Errorf|Wrap|Wrapf]` methods
+implementing the interface:
+
+```go
+type Stack interface {
+  Stack() []uintptr
+}
+```
+
+The functionality for adding stack traces to existing errors came with the
+introduction of the
+[`errors.WithStack()`](https://pkg.go.dev/github.com/pkg/errors?tab=doc#WithStack)
+method on the same package.
+
+This returns an error with a format method which will print the stack trace when
+used with the `%+v` verb.
+
+```go
+import "github.com/pkg/errors"
+
+...
+
+func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
+	sql := `SELECT * FROM transaction WHERE id = $1;`
+
+	var t Transaction
+	if err := db.conn.Get(&t, sql, tranID); err != nil {
+		return Transaction{}, errors.Wrap(err, "failed to get transaction")
+	}
+
+	return t, nil
+}
+
+...
+```
+
+Which, when logging the error with the `%+v` verb, produces something along the
+lines of:
+
+```log
+sql: no rows in result set
+main.main
+        /Users/tom/Documents/tmp/main.go:10
+runtime.main
+        /usr/local/Cellar/go/1.14.6/libexec/src/runtime/proc.go:203
+runtime.goexit
+        /usr/local/Cellar/go/1.14.6/libexec/src/runtime/asm_amd64.s:1373
+```
+
+We can use this to our advantage when creating errors to include a stack trace
+in them. This can then be logged along with the error in order to aid locating
+the source of the error.
+
+One downside of this approach is the performance penalty. The necessary call
+into `runtime.Stack(buf []byte, all bool) int` incurs a non-negligible cost, and
+should be avoided in hot paths.
+
+Stack traces are also not particularly human friendly. They will only identify
+*where* the error occurred, not *why*. Therefore, it's still good to add extra
+context to your errors.
+
+Another minor nitpick is that when wrapping errors multiple times with
+`github.com/pkg/errors`, it will leave you with multiple stack traces, one for
+each time you wrap the error. This creates a rather large set of logs when you
+finally print the error if your stack is deep 🃏.
+
+### Wrapping errors in Go `1.13`
+
+In version `1.13`, Go introduced the `%w` verb, as well as a few methods on the
+`errors` package to support error identification and incorporate wrapping into
+the standard library.
+
+By using `fmt.Errorf()` with the `%w` verb, we're able to enhance errors with
+additional information using only the standard library, while allowing them to
+remain inspectable should we need to identify the underlying cause of an error.
+
+It's important to keep in mind however, when wrapping with `%w`, you are
+implicitly exposing the error to consumers of your package. Only use this when
+you plan to support the error type and avoid exposing implementation details.
+You can use the `%v` verb instead for non-inspectable errors (no `errors.Is(),
+errors.As()`).
+
+Now having `fmt.Errorf()` available is good, however if you never use it in your
+programs you're still going to end up with logs which are hard to decipher. Now
+you could most certainly wrap every error returned at every point of your
+program. However, you will end up with a lot of redundant wraps which don't add
+a whole lot of value and reduce the signal-to-noise ratio in your logs.
+
+Hence, it would be helpful to have a simple set of rules to follow for when
+errors should be wrapped. This is by no means an exhaustive set, however should
+cover the majority of common cases within most programs.
+
+1. When you have **additional context**, which you think would be useful to give to
+   the developer reading the log. This is important, as rules are *not*
+   infallible.
+
+2. **Errors returned from another package**. Wrapping these helps identify the
+   entry point of the error into your program. e.g.
+
+  ```go
+  ...
+
+  func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
+    sql := `SELECT * FROM transaction WHERE id = $1;`
+
+    var t Transaction
+    if err := db.conn.Get(&t, sql, tranID); err != nil {
+      return Transaction{}, fmt.Errorf("failed to get transaction with ID %s: %v", tranID, err)
+    }
+
+    return t, nil
+  }
+
+  ...
+  ```
+
+3. Errors returned by **interface methods**. Interfaces may be implemented by a
+   separate package, therefore wrapping the errors here with context may be
+   valuable.
+
+This set of rules gives a good starting point for helping you identify where in
+your program you should wrap errors. In order to help out with this, I've
+written a linter to identify areas where your code is not wrapping errors and it
+possibly should be.
+
+### Wrapcheck
+
+[Wrapcheck](https://github.com/tomarrell/wrapcheck) is a new linter for Go which
+I built in order to maintain consistency across a codebase with regards to point
+(1) and (2).
+
+For example, the following code which calls into the `sql` package will be
+reported as an error as follows.
+
+```go
+func (db *DB) getUserByID(userID string) (User, error) {
+	sql := `SELECT * FROM user WHERE id = $1;`
+
+	var u User
+	if err := db.conn.Get(&u, sql, userID); err != nil {
+		return User{}, err // wrapcheck error: error returned from external package is unwrapped
+	}
+
+	return u, nil
+}
+
+func (db *DB) getItemByID(itemID string) (Item, error) {
+	sql := `SELECT * FROM item WHERE id = $1;`
+
+	var i Item
+	if err := db.conn.Get(&i, sql, itemID); err != nil {
+		return Item{}, err // wrapcheck error: error returned from external package is unwrapped
+	}
+
+	return i, nil
+}
+```
+
+The fix is to add wrapping to the errors before returning them. The linter
+however is a bit more flexible, and doesn't mind if you still want to use
+`pkg/errors`. It will be satisfied as long as the error is not returned bare.
+
+The linter was written with the new(ish) go/analysis tooling, which greatly
+simplifies AST traversal as well as setup and testing.
+
+The linter has a fair number of tests. You can have a look at all the specified
+cases in the
+[testdata](https://github.com/tomarrell/wrapcheck/tree/master/wrapcheck/testdata)
+directory.
+
+Please feel free to use it in your own projects and report any issues you may
+come across. As mentioned, the linter is meant to handle gracefully the standard
+case, there are most certainly cases which slip past it. But feel free to file
+an issue for these as well.
+
