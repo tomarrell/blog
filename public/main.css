@@ -50,6 +50,11 @@ hr {
   font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
 }
 
+blockquote {
+  padding-left: 10px;
+  border-left: 2px solid #111;
+}
+
 /*
  * Fix the font-sizes of titles, they're a bit big...
  * Make them no bigger than the page header at 3.6rem.
