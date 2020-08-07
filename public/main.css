@@ -55,6 +55,10 @@ blockquote {
   border-left: 2px solid #111;
 }
 
+pre > code {
+  overflow: auto;
+}
+
 /*
  * Fix the font-sizes of titles, they're a bit big...
  * Make them no bigger than the page header at 3.6rem.
