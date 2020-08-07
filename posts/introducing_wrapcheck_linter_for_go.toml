@@ -173,33 +173,35 @@ Hence, it would be helpful to have a simple set of rules to follow for when
 errors should be wrapped. This is by no means an exhaustive set, however should
 cover the majority of common cases within most programs.
 
-1. When you have **additional context**, which you think would be useful to give to
-   the developer reading the log. This is important, as rules are *not*
-   infallible.
+1. When you have **additional context**, which you think would be useful to give
+to the developer reading the log. This is important, as rules are *not*
+infallible.
+
+<br />
 
 2. **Errors returned from another package**. Wrapping these helps identify the
-   entry point of the error into your program. e.g.
+entry point of the error into your program. e.g.
 
-  ```go
-  ...
+```go
+...
 
-  func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
-    sql := `SELECT * FROM transaction WHERE id = $1;`
+func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
+  sql := `SELECT * FROM transaction WHERE id = $1;`
 
-    var t Transaction
-    if err := db.conn.Get(&t, sql, tranID); err != nil {
-      return Transaction{}, fmt.Errorf("failed to get transaction with ID %s: %v", tranID, err)
-    }
-
-    return t, nil
+  var t Transaction
+  if err := db.conn.Get(&t, sql, tranID); err != nil {
+    return Transaction{}, fmt.Errorf("failed to get transaction with ID %s: %v", tranID, err)
   }
 
-  ...
-  ```
+  return t, nil
+}
+
+...
+```
 
 3. Errors returned by **interface methods**. Interfaces may be implemented by a
-   separate package, therefore wrapping the errors here with context may be
-   valuable.
+separate package, therefore wrapping the errors here with context may be
+valuable.
 
 This set of rules gives a good starting point for helping you identify where in
 your program you should wrap errors. In order to help out with this, I've
