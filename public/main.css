@@ -6,7 +6,18 @@ html {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 26px;
+}
+
+body {
+  font-size: 17px;
+}
+
+.wrapper {
+  max-width: 1150px;
+  display: flex;
+  flex-direction: horizontal;
+  margin: auto;
 }
 
 /*
@@ -16,6 +27,19 @@ h1 {
 .button {
   font-weight: 400;
   font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
+  border: 1px solid #2E606B;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  padding: 0 2rem;
+  align-self: flex-end;
+}
+
+.button:hover {
+  background: #2E606B;
+  border: 1px solid #2E606B;
+  color: white;
 }
 
 hr {
@@ -33,6 +57,10 @@ hr {
   text-align: right;
 }
 
+.spacer {
+  width: 164px;
+}
+
 .header .title a {
   color: black;
   text-decoration: none;
@@ -47,6 +75,7 @@ hr {
   margin-bottom: 15px;
   display: block;
   text-decoration: none;
+  font-size: 17px;
 }
 
 .header .links a:hover {
@@ -67,6 +96,66 @@ hr {
 }
 
 /*
+ * Snippet
+ */
+
+.snippets {
+  flex: 1;
+}
+
+.snippet {
+  margin-bottom: 40px;
+  border: 1px solid rgba(4, 21, 35, 0.4);
+  border-radius: 8px;
+  padding: 40px;
+  color: #222;
+}
+
+.snippet-link {
+  text-decoration: none !important;
+}
+
+.snippet:hover {
+  border: 1px solid #041523;
+}
+
+.snippet > a {
+  color: #222;
+  text-decoration: none;
+}
+
+.snippet-title {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 26px;
+  font-family: "Noto Serif";
+}
+
+.snippet-date {
+  color: #aaa;
+  margin-bottom: 30px;
+  font-style: italic;
+  font-size: 15px;
+  color: #EF8332;
+}
+
+.snippet-desc {
+  font-family: "Noto Serif";
+  font-size: 17px;
+  line-height: 180%;
+  margin-bottom: 0;
+  white-space: pre-wrap;
+}
+
+.snippet-button {
+  text-align: right;
+}
+
+.snippet-button > a {
+  margin-bottom: 0;
+}
+
+/*
  * Content
  */
 .content {
@@ -80,19 +169,10 @@ hr {
 
 .content-date {
   color: #aaa;
-}
-
-.snippet {
-  margin-bottom: 2rem;
-}
-
-.snippet-title {
-  margin: 0;
-}
-
-.snippet-date {
-  color: #aaa;
-  margin: 0.4rem 0 1rem;
+  margin-bottom: 30px;
+  font-style: italic;
+  font-size: 16px;
+  color: #EF8332;
 }
 
 .post-content {

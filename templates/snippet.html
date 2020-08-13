@@ -1,9 +1,12 @@
 {{#each posts}}
-<div class="snippet">
-  <h3 class="snippet-title">{{ title }}</h3>
-  <p class="snippet-date">{{ fmt-date date }}</p>
-  <p>{{ description }}</p>
-  <a href="/post/{{id}}" class="button">View more</a>
-  <hr />
-</div>
+<a class="snippet-link" href="/post/{{id}}">
+  <div class="snippet">
+    <h3 class="snippet-title">{{ title }}</h3>
+    <p class="snippet-date">{{ fmt-date date }}</p>
+    <p class="snippet-desc">{{ description }}</p>
+    <!-- <div class="snippet-button"> -->
+      <!-- <a href="/post/{{id}}" class="button">View more</a> -->
+    <!-- </div> -->
+  </div>
+</a>
 {{/each}}
