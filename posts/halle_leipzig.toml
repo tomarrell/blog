@@ -1,11 +1,13 @@
 # Info
 title = "Weekend in Germany, May 4th-5th 2019"
 date = "2019-05-11T23:20:34+0200"
-description = "Some photos from a weekend away in Halle and Leipzig, Germany"
+# description = "Some photos from a weekend away in Halle and Leipzig, Germany"
+description = """
+Some photos from a short weekend trip from Berlin to Halle and Leipzig. Being a bit of an architecture nerd, there are definitely too many photos of buildings still on the camera.
+"""
 
 # Content
 content = """
-
 Some photos from a short weekend trip from Berlin to Halle and Leipzig. Being a bit of an architecture nerd, there are definitely too many photos of buildings still on the camera.
 
 This was my first time getting out of Berlin and seeing a bit more of *actual Germany.* Seeing as Berlin has a reputation for being a bit unique.

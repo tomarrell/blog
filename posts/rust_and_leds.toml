@@ -1,7 +1,12 @@
 # Info
 title = "Rust, a Raspberry Pi and Addressable LED's"
 date = "2019-07-09T16:40:57+0200"
-description = "An overview of using SPI bit-banging in Rust on the Raspberry Pi to control a matrix of WS2812b LED's."
+# description = "An overview of using SPI bit-banging in Rust on the Raspberry Pi to control a matrix of WS2812b LED's."
+description = """
+Back while I was living in New Zealand, I had a fair number of electronics projects on the go. This was one such project.
+
+I'd been playing around with a couple of LED matrices bought from AliExpress.  The LED's on one of the matrices were the very popular WS2812b variant. These panels are made up of addressable RGB LED's soldered to a flexible PCB, giving you three wires out the back -- data, 5V, and ground...
+"""
 
 # Content
 content = """
