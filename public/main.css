@@ -159,8 +159,7 @@ hr {
  * Content
  */
 .content {
-  max-width: 800px;
-  margin: auto;
+  flex: 1;
 }
 
 .content-title {

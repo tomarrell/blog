@@ -318,7 +318,8 @@ code {
 pre > code {
   display: block;
   padding: 1rem 1.5rem !important;
-  white-space: pre; }
+  /* white-space: pre; */
+}
 
 
 /* Tables
