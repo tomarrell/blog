@@ -29,7 +29,7 @@ body {
   font-family: "Noto Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, serif;
   border: 1px solid #2E606B;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 15px;
   letter-spacing: 0.12em;
   padding: 0 2rem;
@@ -106,7 +106,7 @@ hr {
 .snippet {
   margin-bottom: 40px;
   border: 1px solid rgba(4, 21, 35, 0.4);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 40px;
   color: #222;
 }
@@ -117,6 +117,12 @@ hr {
 
 .snippet:hover {
   border: 1px solid #041523;
+}
+
+.snippet:hover .button {
+  background: #2E606B;
+  border: 1px solid #2E606B;
+  color: white;
 }
 
 .snippet > a {
@@ -143,7 +149,7 @@ hr {
   font-family: "Noto Serif";
   font-size: 17px;
   line-height: 180%;
-  margin-bottom: 0;
+  margin-bottom: 30px;
   white-space: pre-wrap;
 }
 
@@ -214,5 +220,26 @@ code {
 @media (max-width: 520px) { 
   html {
     padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 1000px) { 
+  .wrapper {
+    flex-direction: column;
+  }
+  
+  .header {
+    float: none;
+    position: static;
+    /* text-align: left; */
+  }
+
+  .header .links {
+    margin-left: -14px;
+  }
+
+  .header .links a {
+    display: inline;
+    padding: 10px 14px;
   }
 }

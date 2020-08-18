@@ -3,14 +3,9 @@ title = "Introducing Wrapcheck: An error wrapping linter for Go"
 date = "2020-08-07T12:31:20+0200"
 # description = "An overview of the best-practices regarding error wrapping in Go, as well as an introduction to a new linter to maintain consistency in certain circumstances."
 description = """
-So recently, after spending more time than I should hunting down the source of
-an error, I sparked the discussion within my team at work about how we can cut
-down on the time to debug, specifically, by making sure that errors aren't
-handed back to the caller without forgetting to attach extra information.
+So recently, after spending more time than I should hunting down the source of an error, I sparked the discussion within my team at work about how we can cut down on the time to debug, specifically, by making sure that errors aren't handed back to the caller without forgetting to attach extra information.
 
-We already have a pretty good practice in place to wrap errors with additional
-info before we hand them up the stack, however this was missing in this
-particular case...
+We already have a pretty good practice in place to wrap errors with additional info before we hand them up the stack, however this was missing in this particular case...
 """
 
 # Content
