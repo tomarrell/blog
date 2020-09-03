@@ -5,7 +5,7 @@ date = "2019-11-21T22:57:04+0200"
 description = """
 Imagine in a frictionless environment, you have a plane on a runway sized treadmill. The plane sits at the beginning of the treadmill, as if prepared for a traditional takeoff.
 
-However, instead of rolling forward as usual, as the plane begins to move&mdash;the treadmill moves backwards to match it. This happens perpetually.  As the plane picks up forward velocity, the treadmill detects this and accelerates in the opposite direction...
+However, instead of rolling forward as usual, as the plane begins to move, the treadmill moves backwards to match it. This happens perpetually.  As the plane picks up forward velocity, the treadmill detects this and accelerates in the opposite direction...
 """
 
 # Content

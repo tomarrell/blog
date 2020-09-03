@@ -104,6 +104,7 @@ hr {
 }
 
 .snippet {
+  display: block;
   margin-bottom: 40px;
   border: 1px solid rgba(4, 21, 35, 0.4);
   border-radius: 4px;
@@ -112,7 +113,8 @@ hr {
 }
 
 .snippet-link {
-  text-decoration: none !important;
+  display: block;
+  text-decoration: none;
 }
 
 .snippet:hover {
@@ -219,7 +221,11 @@ code {
 
 @media (max-width: 520px) { 
   html {
-    padding: 2rem 1rem;
+    padding: 0 10px;
+  }
+
+  .snippet-button {
+    display: none;
   }
 }
 
@@ -231,7 +237,8 @@ code {
   .header {
     float: none;
     position: static;
-    /* text-align: left; */
+    text-align: center;
+    margin: 30px 0 50px 0;
   }
 
   .header .links {
@@ -239,7 +246,12 @@ code {
   }
 
   .header .links a {
-    display: inline;
+    display: inline-block;
+    width: 10px;
     padding: 10px 14px;
+  }
+
+  .snippet {
+    padding: 16px;
   }
 }
