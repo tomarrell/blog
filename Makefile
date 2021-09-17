@@ -4,6 +4,10 @@ push: ## Push the image to my personal docker registry with the git hash as the 
 	docker push tomarrell/personal:blog-$$(git show -s --format=%h)
 	echo "blog-$$(git show -s --format=%h)" | tr -d '\n' | pbcopy
 
+.PHONY: watch
+watch:
+	watchexec -r "go run ."
+
 ## Help display.
 ## Pulls comments from beside commands and prints a nicely formatted
 ## display with the commands and their usage information.

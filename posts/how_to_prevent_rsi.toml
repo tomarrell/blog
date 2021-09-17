@@ -4,7 +4,7 @@ date = "2019-05-27T04:17:10+0200"
 # description = "The process of how I built myself a keyboard specifically to delay the onset of RSI"
 description = """
 This is the story about how I solved my increasing problem with wrist pain. TLDR, I built a keyboard. And yes, I am crazy enough to rely on it at work as well. This is going to act as somewhat of a build overview.
-
+<br/><br/>
 RSI, or repetitive strain injury, is a pretty terrifying reality to confront as a programmer. It makes typing painful, long stretches of doing your job less than enjoyable. No one wants that...
 """
 

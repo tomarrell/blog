@@ -1,26 +1,33 @@
+{{ define "Base" }}
 <!DOCTYPE html>
 <head>
-  {{#if title }}
-    <title>Tom's Blog - {{ title }}</title>
-  {{else}}
+  {{ if .Title }}
+    <title>Tom's Blog - {{ .Title }}</title>
+  {{ else }}
     <title>Tom Arrell's Blog</title>
-  {{/if}}
+  {{ end }}
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  {{#if description }}
-    <meta name="description" content="{{ description }}" />
-    <meta property="og:description" content="{{ description }}" />
-  {{else}}
+  {{ if .Description }}
+    <meta name="description" content="{{ .Description }}" />
+    <meta property="og:description" content="{{ .Description }}" />
+  {{ else }}
     <meta name="description" content="Tom Arrell's blog. Tom is a Software Engineer who writes about programming, embedded and electrical projects, and life." />
     <meta property="og:description" content="Tom Arrell's blog. Tom is a Software Engineer who writes about programming, embedded and electrical projects, and life." />
-  {{/if}}
+  {{ end }}
 
-  <link rel="stylesheet" type="text/css" href="/public/fonts/stylesheet.css" />
-  <link rel="stylesheet" type="text/css" href="/public/skeleton.css" />
-  <link rel="stylesheet" type="text/css" href="/public/main.css" />
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Noto Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Noto Serif -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <!-- Fira Mono Font -->
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
@@ -48,3 +55,58 @@
 </script>
 <!-- End Okapi Analytics -->
 
+<style>
+html {
+  font-family: "Noto Serif", "Sans Serif";
+}
+
+a {
+  display: inline-block;
+  color: #0074D9;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px;
+  color: #001f3f;
+}
+
+a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #001f3f;
+  transition: width .3s;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.no-underline:hover {
+  text-decoration: none;
+}
+
+.color-primary {
+  color: #333;
+}
+
+.color-secondary {
+  color: #EF8332;
+}
+
+.color-body {
+  color: #444;
+}
+
+.color-faded {
+  color: #555;
+}
+</style>
+
+{{ end }}

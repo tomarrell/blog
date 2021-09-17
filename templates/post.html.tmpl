@@ -1,0 +1,82 @@
+{{ template "Base" }}
+
+<div class="container max-w-4xl flex m-auto py-6">
+  {{ template "Heading" }}
+
+  <div class="flex w-full flex-col gap-6">
+    <div class="flex-1">
+      <h1 class="mb-2 text-3xl">{{ .Title }}</h1>
+      <p class="mb-3 italic">{{ .Date.Format "02.01.2006" }}</p>
+
+      <hr class="mb-5" />
+
+      <div class="content color-body">
+        {{ .Content }}
+      </div>
+
+      <a href="/" class="button">Back to posts</a>
+
+      <hr />
+
+      <div id="replybox"></div>
+    </div>
+
+    <script>
+      window.replybox = { site: 'JOGB5xlnop' };
+    </script>
+    <script src="https://cdn.getreplybox.com/js/embed.js"></script>
+  </div>
+</div>
+
+<style>
+.content {
+  position: relative;
+}
+
+.content hr {
+  margin-bottom: 1.25rem;
+}
+
+.content p {
+  margin-bottom: 1.25rem;
+}
+
+.content img {
+  margin-bottom: 1.25rem;
+  max-width: 100%;
+}
+
+.content blockquote {
+  margin-bottom: 1.25rem;
+  padding-left: 10px;
+  border-left: 2px solid #111;
+}
+
+.content pre {
+  margin-bottom: 1.25rem;
+}
+
+.content pre > code {
+  overflow: auto;
+}
+
+/* Wrap single line formatted code */
+.content code {
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/*
+ * Fix the font-sizes of titles, they're a bit big...
+ * Make them no bigger than the page header at 3.6rem.
+ */
+.content h1 { font-size: 3.6rem; margin-bottom: 0.8rem; }
+.content h2 { font-size: 3.0rem; margin-bottom: 0.8rem; }
+.content h3 { font-size: 2.4rem; margin-bottom: 0.8rem; }
+.content h4 { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.content h5 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+.content h6 { font-size: 0.8rem; margin-bottom: 0.8rem; }
+</style>

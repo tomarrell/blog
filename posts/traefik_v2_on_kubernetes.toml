@@ -4,7 +4,7 @@ date = "2020-06-14T01:21:28+0200"
 # description = "A guide to deploying and using Traefik v2.2 as your Kubernetes Ingress Controller using Kustomize."
 description = """
 This post will go through how to deploy and configure Traefik v2.2 as the ingress controller for your Kubernetes cluster using Kustomize. Specifically without using the IngressRoute CRD, and instead opting to stick with the built-in Ingress Kubernetes resource.
-
+<br/><br/>
 Traefik publishes helm charts for deploying Traefik v1.7, however given Kustomize is now built into the latest versions of Kubectl, this guide will go over how you can use it...
 """
 
