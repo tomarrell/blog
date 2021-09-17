@@ -1,0 +1,368 @@
+# Info
+title = "Kustomize: Traefik v2.2 as a Kubernetes Ingress Controller"
+date = "2020-06-14T01:21:28+0200"
+# description = "A guide to deploying and using Traefik v2.2 as your Kubernetes Ingress Controller using Kustomize."
+description = """
+This post will go through how to deploy and configure Traefik v2.2 as the ingress controller for your Kubernetes cluster using Kustomize. Specifically without using the IngressRoute CRD, and instead opting to stick with the built-in Ingress Kubernetes resource.
+
+Traefik publishes helm charts for deploying Traefik v1.7, however given Kustomize is now built into the latest versions of Kubectl, this guide will go over how you can use it...
+"""
+
+# Content
+content = """
+This post will go through how to deploy and configure Traefik v2.2 as the
+ingress controller for your Kubernetes cluster using Kustomize. Specifically
+_without_ using the IngressRoute CRD, and instead opting to stick with the
+built-in Ingress Kubernetes resource.
+
+Traefik publishes helm charts for deploying Traefik v1.7, however given
+Kustomize is now built into the latest versions of Kubectl, this guide will go
+over how you can use it.
+
+We will also cover how to add automatic TLS configuration for hosts using Let's
+Encrypt.
+
+Requirements:
+- Kubernetes cluster: `>=1.17.x`
+- Kubectl: `>=1.17.x`
+- Traefik: `>=2.2.x`
+
+> Note: Versions below these may still work, but have not been tested.
+
+![Traefik dashboard](/public/images/traefik_kube/dashboard.png)
+
+
+## Defining the Kustomize App
+
+Kustomize has been natively built into Kubectl since version `1.14`. This makes
+it a nice and simple option for defining DRY Kubernetes manifests.
+
+Traefik version `2` introduced their new Kubernetes custom resource definition
+(CRD) which allows for more idiomatic configuration of your Ingress routes,
+using the helpfully named IngressRoute resource.
+
+However, if you'd like to keep things simple and just use stock-standard
+resources, a simple Ingress works well. Configuration can also still be managed
+by Kubernetes annotations.
+
+#### Kustomization
+
+The first step to deploying with Kustomize is to create a `kustomization.yaml`
+file. The file should look something like this:
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- cluster-role.yaml
+- cluster-role-binding.yaml
+- service-account.yaml
+- daemon-set.yaml
+
+namespace: kube-system
+
+commonLabels:
+  app: traefik
+```
+
+As a brief overview: the first two lines are mandatory, the resources array
+contains a list of resources which we will be deploying and the namespace
+specifies which Kubernetes namespace you would like it all deployed into. A nice
+little convenience feature is specifying the `commonLabels` object. This will
+apply label values across all the resources, including adding fields such as
+`selector.matchLabels` on the DaemonSet, for example.
+
+#### RBAC
+
+The first step is to define a cluster role and a service account in order to
+authorize Traefik's access to the Kubernetes API.
+
+Create a new file `cluster-role.yaml` with the contents:
+
+```yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses/status
+    verbs:
+    - update
+```
+
+This will allow the Traefik controller to fetch a list of Services, Endpoints
+and Secrets. As well as being able to fetch and update the status field on
+Ingress resources.
+
+The next thing we will need is a ServiceAccount in order to identify the
+controller.
+
+Create a new file called `service-account.yaml` with the following:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+```
+
+Once applied, this will cause Kubernetes to generate an authentication token
+which will be used by the DaemonSet in order to authenticate with the Kubernetes
+API.
+
+Finally, to create the binding between the role and the ServiceAccount we will
+need a ClusterRoleBinding.
+
+In a new file, `cluster-role-binding.yaml` include the following:
+
+```yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller
+subjects:
+- kind: ServiceAccount
+  name: traefik-ingress-controller
+```
+
+
+#### DaemonSet
+
+Finally, we need to create the actual controller. There are two ways to do this:
+
+- Deployment
+- DaemonSet
+
+The pros and cons of both are covered in more detail
+[here](https://docs.traefik.io/v1.7/user-guide/kubernetes/#deploy-traefik-using-a-deployment-or-daemonset).
+However I would recommend for simple operation to use a DaemonSet, as it will
+automatically make sure that each node in your cluster has a single instance of
+the ingress controller.
+
+Create a new file called `daemon-set.yaml` which looks like the following:
+
+```yaml
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: traefik-daemon-set
+spec:
+  template:
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik:v2.2
+        name: traefik-ingress-lb
+        ports:
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
+        - name: admin
+          containerPort: 8080
+          hostPort: 8080
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_BIND_SERVICE
+        args:
+        # Enable the dashboard without requiring a password. Not recommended
+        # for production.
+        - --api.insecure
+        - --api.dashboard
+
+        # Specify that we want to use Traefik as an Ingress Controller.
+        - --providers.kubernetesingress
+
+        # Define two entrypoint ports, and setup a redirect from HTTP to HTTPS.
+        - --entryPoints.web.address=:80
+        - --entryPoints.websecure.address=:443
+        - --entrypoints.web.http.redirections.entryPoint.to=websecure
+        - --entrypoints.web.http.redirections.entryPoint.scheme=https
+
+        # Enable debug logging. Useful to work out why something might not be
+        # working. Fetch logs of the pod.
+        # - --log.level=debug
+
+        # Let's Encrypt Configurtion.
+        - --certificatesresolvers.default.acme.email=<YOUR_EMAIL>
+        - --certificatesresolvers.default.acme.storage=acme.json
+        - --certificatesresolvers.default.acme.tlschallenge
+        # Use the staging ACME server. Uncomment this while testing to prevent
+        # hitting rate limits in production.
+        # - --certificatesresolvers.default.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/dire
+```
+
+The important part here is the list of arguments that we are passing to the
+application. These are passed to the pod in order to configure Traefik through
+the command line.
+
+You will need to replace the field `<YOUR_EMAIL>` with your own email address,
+which is used by Let's Encrypt when issuing certificates.
+
+The flag `--certificatesresolvers.default.acme.tlschallenge` will configure
+Traefik to ask for a `TLS-ALPN-01` challenge type from the ACME server. You will
+need your domain name configured and pointing to your cluster in order for this
+to work, as the ACME server will send challenge TLS requests to the hostname you
+are requesting the certificate for.
+
+You can read further about how the challenge is carried out
+[here](https://letsencrypt.org/docs/challenge-types/#tls-alpn-01).
+
+> Note: I recommend to use the Let's Encrypt staging ACME server while you're
+> configuring things to prevent hitting the relatively strict rate limiting by
+> Let's Encrypt.
+
+#### Deploying
+
+Once you've defined all the resources above, you can now apply it to your
+cluster.
+
+Your directory should now look a bit similar to the following:
+
+```bash
+traefik
+├── cluster-role-binding.yaml
+├── cluster-role.yaml
+├── daemon-set.yaml
+├── kustomization.yaml
+└── service-account.yaml
+```
+
+Now from within the directory, run the following command.
+
+```bash
+$ kubectl apply -k .
+```
+
+You should receive a message saying that all of the 4 resources were configured
+correctly. Now you can begin using your Ingress controller.
+
+> You should also be able to view your Traefik dashboard by going to
+> `<YOUR_CLUSTER_IP>:8080`.
+
+
+## Using the Ingress controller
+
+Now that the controller is configured, we can begin creating Ingress resources
+which will route incoming traffic to our Services.
+
+Conveniently, our requests will be automatically redirected from HTTP -> HTTPS,
+and TLS certificates will be generated for the corresponding domain.
+
+A simple Ingress for our secure HelloWorld application may look like:
+
+```yaml
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: helloworld-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: helloworld.com
+      http:
+        paths:
+          - backend:
+              serviceName: helloworld-service
+              servicePort: 8080
+```
+
+This will create a new Ingress and requests a certificate for the host
+`helloworld.com` from your configured ACME server. This will then be stored and
+used for all requests coming with this host.
+
+The Ingress will then control the TLS termination, and forward traffic on to the
+specified service, in this case, `helloworld-service`. Which might look
+something like the following:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  type: ClusterIP
+  selector:
+    app: helloworld
+  ports:
+  - name: http
+    port: 8080
+```
+
+That's it! If you have a pod with the label `app=helloworld`, your Ingress will
+now be forwarding TLS terminated traffic to it.
+
+If not, I would recommend you take a look at the pod logs of your Traefik pod
+on the `kube-system` namespace and double check you haven't forgotten to remove
+the staging ACME server configuration flag on the daemon set.
+
+#### Further Configuration
+
+The above Ingress is rather simple, and only achieves routing based on the
+hostname. A list of all the annotations you can apply to configure the Ingress
+can be found in the Traefik [routing configuration
+documentation](https://docs.traefik.io/routing/providers/kubernetes-ingress/).
+
+You can also of course use the provided Kubernetes properties as well. For
+example, to specify the path:
+
+```yaml
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: helloworld-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: helloworld.com
+      http:
+        paths:
+          - path: /helloworld
+            backend:
+              serviceName: helloworld-service
+              servicePort: 8080
+```
+
+This should hopefully get you started with using Traefik as your Ingress
+Controller in Kubernetes.
+
+Please let me know if you have any questions or feedback in the comments.
+"""

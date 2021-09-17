@@ -1,0 +1,87 @@
+/* * * * */
+/* SERIF */
+/* * * * */
+
+@font-face {
+    font-family: 'Noto Serif';
+    src: local('Noto Serif Bold'),
+         local('NotoSerif-Bold'),
+         url('/public/fonts/NotoSerif-Bold.woff2') format('woff2'),
+         url('/public/fonts/NotoSerif-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Serif';
+    src: local('Noto Serif Bold Italic'),
+         local('NotoSerif-BoldItalic'),
+         url('/public/fonts/NotoSerif-BoldItalic.woff2') format('woff2'),
+         url('/public/fonts/NotoSerif-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Noto Serif';
+    src: local('Noto Serif Italic'),
+         local('NotoSerif-Italic'),
+         url('/public/fonts/NotoSerif-Italic.woff2') format('woff2'),
+         url('/public/fonts/NotoSerif-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Noto Serif';
+    src: local('Noto Serif'),
+         local('NotoSerif'),
+         url('/public/fonts/NotoSerif.woff2') format('woff2'),
+         url('/public/fonts/NotoSerif.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* * * * */
+/* SANS  */
+/* * * * */
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Italic'),
+         local('NotoSans-Italic'),
+         url('/public/fonts/NotoSans-Italic.woff2') format('woff2'),
+         url('/public/fonts/NotoSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Bold Italic'),
+         local('NotoSans-BoldItalic'),
+         url('/public/fonts/NotoSans-BoldItalic.woff2') format('woff2'),
+         url('/public/fonts/NotoSans-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Bold'),
+         local('NotoSans-Bold'),
+         url('/public/fonts/NotoSans-Bold.woff2') format('woff2'),
+         url('/public/fonts/NotoSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans'),
+         local('NotoSans'),
+         url('/public/fonts/NotoSans.woff2') format('woff2'),
+         url('/public/fonts/NotoSans.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
