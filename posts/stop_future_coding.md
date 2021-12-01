@@ -1,14 +1,20 @@
 # Stop Future Coding
 
-All too often I see instances where someone (myself included) begins designing
-systems for requirements that don't exist. This is something I term as *future
-coding*. In other words, building software for the "what if".
+All too often I see instances where someone, myself included, begins designing
+systems for requirements that don't yet exist. This is something I term as
+*future coding*. Others have coined the phrase, "You aren't going to need it".
 
-This is a practice that I think is all too common in software, and I continue to
-observe how it leads to systems which become overly bloated, more complex and
-ultimately degrade over time.
+This is primarily in reference to the practice of designing systems which are
+highly abstracted in order to cater for requirements that don't yet exist, and
+are unlikely to materialise. This can frequently come up in technical
+discussions prefixed by the phrase, "but what if...?"
 
-Instead, we should be looking 
+I've observed this frequently leading to systems which are overly bloated, more
+complex and will degrade faster over time as new requirements arise and the
+system is forced to change.
+
+Instead, we should be challenging requirements that are not contributing to the
+value of the product.
 
 ## The wrong abstractions
 
