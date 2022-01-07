@@ -3,7 +3,7 @@
 <div class="container max-w-4xl flex m-auto py-6">
   {{ template "Heading" }}
 
-  <div class="flex w-full flex-col gap-6">
+  <div class="flex-auto flex flex-col gap-6">
     <div class="flex-1">
       <h1 class="mb-2 text-3xl">{{ .Title }}</h1>
       <p class="mb-3 italic">{{ .Date.Format "02.01.2006" }}</p>
@@ -14,7 +14,9 @@
         {{ .Content }}
       </div>
 
-      <a href="/" class="button">Back to posts</a>
+      <div class="mb-4">
+        <a href="/" class="button">Back to posts</a>
+      </div>
 
       <hr />
 
@@ -54,6 +56,7 @@
 
 .content pre {
   margin-bottom: 1.25rem;
+  padding: 0.8rem;
 }
 
 .content pre > code {

@@ -26,6 +26,7 @@ func main() {
 	}
 
 	e := echo.New()
+	e.HideBanner = true
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Skipper: middleware.DefaultSkipper,
 		Format:  format,

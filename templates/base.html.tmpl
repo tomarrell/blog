@@ -33,42 +33,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
 
   <!-- HighlightJS -->
-  <link rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/railscasts.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/railscasts.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <!-- Okapi Analytics -->
 <script>
- (function (o, k, a, p, i) {
-   o[p] = o[p] || function ()
-   { (o[p].queue = o[p].queue || []).push(arguments); }; var e = k.createElement(i);
-   var firstScript = k.getElementsByTagName(i)[0]; e.async = 1; e.src = a;
-   firstScript.parentNode.insertBefore(e, firstScript);
- })(window, document,
-   '//okapianalytics.com/zeug.js',
-   'okapi', 'script');
- okapi('set', 'tokenId', '2f1d5bd5-24fb-4df6-bae3-1fd7285af192');
- okapi('set', 'trackerApiUrl', '//api.okapianalytics.com/collect' );
- okapi('trackPageView');
+  (function (o, k, a, p, i) {
+    o[p] = o[p] || function ()
+    { (o[p].queue = o[p].queue || []).push(arguments); }; var e = k.createElement(i);
+    var firstScript = k.getElementsByTagName(i)[0]; e.async = 1; e.src = a;
+    firstScript.parentNode.insertBefore(e, firstScript);
+  })(window, document,
+    '//okapianalytics.com/zeug.js',
+    'okapi', 'script');
+  okapi('set', 'tokenId', '2f1d5bd5-24fb-4df6-bae3-1fd7285af192');
+  okapi('set', 'trackerApiUrl', '//api.okapianalytics.com/collect' );
+  okapi('trackPageView');
 </script>
 <!-- End Okapi Analytics -->
 
 <style>
 html {
+  font-size: 18px;
   font-family: "Noto Serif", "Sans Serif";
 }
 
 a {
   display: inline-block;
-  color: #0074D9;
   text-decoration: none;
-}
-
-a:hover {
-  border-bottom: 1px;
-  color: #001f3f;
 }
 
 a::after {
@@ -76,7 +70,7 @@ a::after {
   display: block;
   width: 0;
   height: 2px;
-  background: #001f3f;
+  background: white;
   transition: width .3s;
 }
 
@@ -107,6 +101,38 @@ li {
 .color-faded {
   color: #555;
 }
+
+{{ if true }}
+body {
+  background-color: rgb(13, 13, 13);
+  color: #fcfcfc;
+}
+
+.color-primary {
+  color: #fcfcfc;
+}
+
+.color-secondary {
+  color: #fcfcfc;
+}
+
+.color-body {
+  color: #fcfcfc;
+}
+
+.color-faded {
+  color: #fcfcfc;
+}
+
+.content blockquote {
+  border-left: 2px solid white !important;
+}
+
+pre {
+  background-color: #1a1a1a;
+}
+
+{{ end }}
 </style>
 
 {{ end }}

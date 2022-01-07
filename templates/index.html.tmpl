@@ -3,7 +3,7 @@
 <div class="container max-w-4xl flex m-auto py-6">
   {{ template "Heading" }}
 
-  <div class="flex flex-col gap-6">
+  <div class="flex-auto flex flex-col gap-6">
     {{ range .Posts }}
         <a class="no-underline block" href="/post/{{ .ID }}">
           <div class="border hover:border-black py-8 px-10 color-primary">
