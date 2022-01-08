@@ -46,6 +46,10 @@ func parsePosts() ([]Post, error) {
 		}
 
 		p := path.Join(postsPath, e.Name())
+		if !strings.Contains(p, tomlExtension) {
+			continue
+		}
+
 		b, err := os.ReadFile(p)
 		if err != nil {
 			log.Err(err).Str("name", e.Name()).Msg("reading file")

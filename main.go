@@ -36,6 +36,7 @@ func main() {
 	e.GET("/", handleIndex(templates))
 	e.GET("/post/:post", handlePost(templates))
 	e.Static("/public", "./public")
+	e.Static("/favicon.ico", "./public/favicon.ico")
 
 	log.Info().Msg("starting server")
 
@@ -110,6 +111,7 @@ func handleError(t *template.Template) func(error, echo.Context) {
 
 		switch code {
 		case http.StatusNotFound:
+			c.Response().WriteHeader(code)
 			writeErr = t.ExecuteTemplate(c.Response().Writer, "404.html.tmpl", nil)
 		default:
 			c.Logger().Error(err)
