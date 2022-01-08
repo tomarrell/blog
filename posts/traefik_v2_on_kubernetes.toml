@@ -23,14 +23,15 @@ We will also cover how to add automatic TLS configuration for hosts using Let's
 Encrypt.
 
 Requirements:
+
 - Kubernetes cluster: `>=1.17.x`
 - Kubectl: `>=1.17.x`
 - Traefik: `>=2.2.x`
 
+<br />
 > Note: Versions below these may still work, but have not been tested.
 
 ![Traefik dashboard](/public/images/traefik_kube/dashboard.png)
-
 
 ## Defining the Kustomize App
 
@@ -45,7 +46,7 @@ However, if you'd like to keep things simple and just use stock-standard
 resources, a simple Ingress works well. Configuration can also still be managed
 by Kubernetes annotations.
 
-#### Kustomization
+### Kustomization
 
 The first step to deploying with Kustomize is to create a `kustomization.yaml`
 file. The file should look something like this:
@@ -73,7 +74,7 @@ little convenience feature is specifying the `commonLabels` object. This will
 apply label values across all the resources, including adding fields such as
 `selector.matchLabels` on the DaemonSet, for example.
 
-#### RBAC
+### RBAC
 
 The first step is to define a cluster role and a service account in order to
 authorize Traefik's access to the Kubernetes API.
@@ -152,7 +153,7 @@ subjects:
 ```
 
 
-#### DaemonSet
+### DaemonSet
 
 Finally, we need to create the actual controller. There are two ways to do this:
 
@@ -244,7 +245,7 @@ You can read further about how the challenge is carried out
 > configuring things to prevent hitting the relatively strict rate limiting by
 > Let's Encrypt.
 
-#### Deploying
+### Deploying
 
 Once you've defined all the resources above, you can now apply it to your
 cluster.

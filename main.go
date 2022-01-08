@@ -35,6 +35,7 @@ func main() {
 
 	e.GET("/", handleIndex(templates))
 	e.GET("/post/:post", handlePost(templates))
+	e.Static("/public", "./public")
 
 	log.Info().Msg("starting server")
 

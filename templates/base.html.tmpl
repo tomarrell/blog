@@ -60,6 +60,10 @@ html {
   font-family: "Noto Serif", "Sans Serif";
 }
 
+body {
+  margin: 0 1rem;
+}
+
 a {
   display: inline-block;
   text-decoration: none;
@@ -70,7 +74,7 @@ a::after {
   display: block;
   width: 0;
   height: 2px;
-  background: white;
+  background: black;
   transition: width .3s;
 }
 
@@ -79,7 +83,7 @@ a:hover::after {
 }
 
 li {
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .no-underline:hover {
@@ -102,26 +106,55 @@ li {
   color: #555;
 }
 
+.post:hover {
+  border-color: black;
+}
+
+ol, ul {
+  padding-left: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+ol {
+  list-style: decimal;
+}
+
+ul {
+  list-style: disc;
+}
+
+th, td {
+  padding: 0rem 0.8rem 0 0;
+}
+
+table {
+  margin-bottom: 1.25rem;
+}
+
 {{ if true }}
 body {
   background-color: rgb(13, 13, 13);
-  color: #fcfcfc;
+  color: #eee;
+}
+
+a:hover::after {
+  background-color: white;
 }
 
 .color-primary {
-  color: #fcfcfc;
+  color: #eee;
 }
 
 .color-secondary {
-  color: #fcfcfc;
+  color: #eee;
 }
 
 .color-body {
-  color: #fcfcfc;
+  color: #eee;
 }
 
 .color-faded {
-  color: #fcfcfc;
+  color: #eee;
 }
 
 .content blockquote {
@@ -130,6 +163,14 @@ body {
 
 pre {
   background-color: #1a1a1a;
+}
+
+.post {
+  border-color: #aaa;
+}
+
+.post:hover {
+  border-color: white;
 }
 
 {{ end }}

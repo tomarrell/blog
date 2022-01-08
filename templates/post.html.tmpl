@@ -8,7 +8,7 @@
       <h1 class="mb-2 text-3xl">{{ .Title }}</h1>
       <p class="mb-3 italic">{{ .Date.Format "02.01.2006" }}</p>
 
-      <hr class="mb-5" />
+      <div style="margin-bottom:2.3rem;"></div>
 
       <div class="content color-body">
         {{ .Content }}
@@ -17,8 +17,6 @@
       <div class="mb-4">
         <a href="/" class="button">Back to posts</a>
       </div>
-
-      <hr />
 
       <div id="replybox"></div>
     </div>
@@ -31,6 +29,10 @@
 </div>
 
 <style>
+a {
+  color: #ff5656;
+}
+
 .content {
   position: relative;
 }
@@ -50,17 +52,26 @@
 
 .content blockquote {
   margin-bottom: 1.25rem;
-  padding-left: 10px;
+  padding-left: 1.5rem;
   border-left: 2px solid #111;
 }
 
 .content pre {
   margin-bottom: 1.25rem;
   padding: 0.8rem;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.content code {
+  color: white;
+  background-color: #1a1a1a;
+  padding: 0.2rem 0.4rem 0.3rem 0.4rem;
 }
 
 .content pre > code {
   overflow: auto;
+  padding: 0;
 }
 
 /* Wrap single line formatted code */
@@ -76,10 +87,10 @@
  * Fix the font-sizes of titles, they're a bit big...
  * Make them no bigger than the page header at 3.6rem.
  */
-.content h1 { font-size: 3.6rem; margin-bottom: 0.8rem; }
-.content h2 { font-size: 3.0rem; margin-bottom: 0.8rem; }
-.content h3 { font-size: 2.4rem; margin-bottom: 0.8rem; }
-.content h4 { font-size: 1.8rem; margin-bottom: 0.8rem; }
-.content h5 { font-size: 1.2rem; margin-bottom: 0.8rem; }
-.content h6 { font-size: 0.8rem; margin-bottom: 0.8rem; }
+.content h1 { font-size: 2.4rem; margin-bottom: 0.8rem; }
+.content h2 { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.content h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+.content h4 { font-size: 0.8rem; margin-bottom: 0.8rem; }
+.content h5 { font-size: 0.6rem; margin-bottom: 0.8rem; }
+.content h6 { font-size: 0.4rem; margin-bottom: 0.8rem; }
 </style>
