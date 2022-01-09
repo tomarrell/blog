@@ -1,9 +1,9 @@
 {{ template "Base" }}
 
-<div class="container max-w-4xl flex m-auto py-6">
+<div class="container max-w-4xl flex flex-col md:flex-row m-auto py-6">
   {{ template "Heading" }}
 
-  <div class="flex-auto flex flex-col gap-6">
+  <div class="flex-auto flex flex-col mt-8 md:mt-0 gap-6">
     {{ range .Posts }}
         <a class="no-underline block" href="/post/{{ .ID }}">
           <div class="post border py-8 px-10 color-primary">
