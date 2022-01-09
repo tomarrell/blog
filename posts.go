@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
@@ -34,7 +35,7 @@ type Post struct {
 func parsePosts() ([]Post, error) {
 	var posts []Post
 
-	entries, err := os.ReadDir(postsPath)
+	entries, err := fs.ReadDir(templateFS, postsPath)
 	if err != nil {
 		return nil, fmt.Errorf("reading posts directory: %v", err)
 	}
