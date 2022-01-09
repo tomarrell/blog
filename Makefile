@@ -5,7 +5,7 @@ push: ## Push the image to my personal docker registry with the git hash as the 
 	echo "blog-$$(git show -s --format=%h)" | tr -d '\n' | pbcopy
 
 .PHONY: watch
-watch:
+watch: ## Run the blog locally, restarting on changes
 	watchexec -r "go run ."
 
 ## Help display.
