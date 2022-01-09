@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"fmt"
 	"html/template"
+	"io/fs"
 	"net/http"
 	"time"
 
@@ -15,6 +16,8 @@ import (
 )
 
 var (
+	//go:embed posts/*
+	//go:embed public/*
 	//go:embed templates/*
 	templateFS embed.FS
 )
@@ -24,6 +27,12 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("parsing templates")
 	}
+
+	public, err := fs.Sub(templateFS, "public")
+	if err != nil {
+		log.Fatal().Msg("failed to open subdir /public in embedded fs")
+	}
+	pubFS := http.FS(public)
 
 	e := echo.New()
 	e.HideBanner = true
@@ -35,8 +44,8 @@ func main() {
 
 	e.GET("/", handleIndex(templates))
 	e.GET("/post/:post", handlePost(templates))
-	e.Static("/public", "./public")
-	e.Static("/favicon.ico", "./public/favicon.ico")
+	e.GET("/public/*", echo.WrapHandler(http.StripPrefix("/public", http.FileServer(pubFS))))
+	e.GET("/favicon.ico", echo.WrapHandler(http.FileServer(pubFS)))
 
 	log.Info().Msg("starting server")
 
