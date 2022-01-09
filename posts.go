@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"io/fs"
-	"os"
 	"path"
 	"path/filepath"
 	"sort"
@@ -51,7 +50,7 @@ func parsePosts() ([]Post, error) {
 			continue
 		}
 
-		b, err := os.ReadFile(p)
+		b, err := fs.ReadFile(templateFS, p)
 		if err != nil {
 			log.Err(err).Str("name", e.Name()).Msg("reading file")
 			continue
@@ -86,7 +85,7 @@ func parsePosts() ([]Post, error) {
 func parsePost(name string) (Post, error) {
 	p := path.Join(postsPath, name) + tomlExtension
 
-	b, err := os.ReadFile(p)
+	b, err := fs.ReadFile(templateFS, p)
 	if err != nil {
 		return Post{}, fmt.Errorf("reading post %s: %v", p, err)
 	}
