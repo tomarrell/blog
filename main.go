@@ -132,23 +132,3 @@ func handleError(t *template.Template) func(error, echo.Context) {
 		}
 	}
 }
-
-func loggingHandler(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		log.Debug().
-			Str("method", r.Method).
-			Str("host", r.Host).
-			Str("url", r.URL.String()).
-			Str("remoteAddr", r.RemoteAddr).
-			Str("agent", r.UserAgent()).
-			Str("referrer", r.Referer()).
-			Msg("")
-
-		next(w, r)
-	}
-}
-
-func respondError(w http.ResponseWriter, err error) {
-	log.Err(err).Msg("internal server error")
-	http.Error(w, err.Error(), http.StatusInternalServerError)
-}
