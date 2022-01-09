@@ -16,9 +16,7 @@ import (
 )
 
 var (
-	//go:embed posts/*
-	//go:embed public/*
-	//go:embed templates/*
+	//go:embed posts/* public/* templates/*
 	templateFS embed.FS
 )
 
