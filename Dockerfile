@@ -1,21 +1,14 @@
 # Builder image
-FROM rust:latest as builder
+FROM golang:latest as builder
+
+COPY . /build
 
 WORKDIR /build
-
-COPY ./src /build/src
-COPY ./Cargo.toml /build/Cargo.toml
-
-RUN cargo build --release
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o blog . 
 
 # Exec image
-FROM rust:slim-buster
+FROM alpine:latest
 
-WORKDIR /app
+COPY --from=builder /build/blog /blog
 
-COPY --from=builder /build/target/release/blog /app/blog
-COPY ./public /app/public
-COPY ./templates /app/templates
-COPY ./posts /app/posts
-
-CMD ["/app/blog"]
+ENTRYPOINT ["/blog"]

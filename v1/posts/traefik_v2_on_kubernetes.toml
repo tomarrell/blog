@@ -4,7 +4,7 @@ date = "2020-06-14T01:21:28+0200"
 # description = "A guide to deploying and using Traefik v2.2 as your Kubernetes Ingress Controller using Kustomize."
 description = """
 This post will go through how to deploy and configure Traefik v2.2 as the ingress controller for your Kubernetes cluster using Kustomize. Specifically without using the IngressRoute CRD, and instead opting to stick with the built-in Ingress Kubernetes resource.
-<br/><br/>
+
 Traefik publishes helm charts for deploying Traefik v1.7, however given Kustomize is now built into the latest versions of Kubectl, this guide will go over how you can use it...
 """
 
@@ -23,15 +23,14 @@ We will also cover how to add automatic TLS configuration for hosts using Let's
 Encrypt.
 
 Requirements:
-
 - Kubernetes cluster: `>=1.17.x`
 - Kubectl: `>=1.17.x`
 - Traefik: `>=2.2.x`
 
-<br />
 > Note: Versions below these may still work, but have not been tested.
 
 ![Traefik dashboard](/public/images/traefik_kube/dashboard.png)
+
 
 ## Defining the Kustomize App
 
@@ -46,7 +45,7 @@ However, if you'd like to keep things simple and just use stock-standard
 resources, a simple Ingress works well. Configuration can also still be managed
 by Kubernetes annotations.
 
-### Kustomization
+#### Kustomization
 
 The first step to deploying with Kustomize is to create a `kustomization.yaml`
 file. The file should look something like this:
@@ -74,7 +73,7 @@ little convenience feature is specifying the `commonLabels` object. This will
 apply label values across all the resources, including adding fields such as
 `selector.matchLabels` on the DaemonSet, for example.
 
-### RBAC
+#### RBAC
 
 The first step is to define a cluster role and a service account in order to
 authorize Traefik's access to the Kubernetes API.
@@ -153,7 +152,7 @@ subjects:
 ```
 
 
-### DaemonSet
+#### DaemonSet
 
 Finally, we need to create the actual controller. There are two ways to do this:
 
@@ -245,7 +244,7 @@ You can read further about how the challenge is carried out
 > configuring things to prevent hitting the relatively strict rate limiting by
 > Let's Encrypt.
 
-### Deploying
+#### Deploying
 
 Once you've defined all the resources above, you can now apply it to your
 cluster.

@@ -1,23 +1,19 @@
 # Info
 title = "Introducing Wrapcheck: An error wrapping linter for Go"
 date = "2020-08-07T12:31:20+0200"
+# description = "An overview of the best-practices regarding error wrapping in Go, as well as an introduction to a new linter to maintain consistency in certain circumstances."
 description = """
-So recently, after spending more time than I should hunting down the source of
-an error, I sparked the discussion within my team at work about how we can cut
-down on the time to debug, specifically, by making sure that errors aren't
-handed back to the caller without forgetting to attach extra information.
+So recently, after spending more time than I should hunting down the source of an error, I sparked the discussion within my team at work about how we can cut down on the time to debug, specifically, by making sure that errors aren't handed back to the caller without forgetting to attach extra information.
 
-<br/><br/>
-
-We already have a pretty good practice in place to wrap errors with
-additional info before we hand them up the stack, however this was missing in
-this particular case...
+We already have a pretty good practice in place to wrap errors with additional info before we hand them up the stack, however this was missing in this particular case...
 """
 
 # Content
 content = """
 *I've released a Go linter to check for the rule described in this post. You can
 find it here: [wrapcheck](https://github.com/tomarrell/wrapcheck)*
+
+<hr />
 
 > This is a small post covering error wrapping in Go that will build on the
 > [work from Dave Cheney](https://dave.cheney.net/tag/stacktrace).
@@ -42,7 +38,7 @@ time="2020-08-04T11:36:27+02:00" level=error error="sql: no rows in result set"
 To help with debugging here, it's important that additional information is
 attached to the error to give the developer more context.
 
-## Extending errors
+### Extending errors
 
 By now you've probably already heard the popular Go proverb of:
 
@@ -84,7 +80,7 @@ This is a bit intensive for many programs however, so we'll take a look at a
 less intense, more widely used method for adding information to errors, called
 wrapping.
 
-## Wrapping errors prior to Go `1.13`
+### Wrapping errors prior to Go `1.13`
 
 Go has had error wrapping since the introduction of the
 [`errors`](https://godoc.org/github.com/pkg/errors) package was introduced in
@@ -156,7 +152,7 @@ Another minor nitpick is that when wrapping errors multiple times with
 each time you wrap the error. This creates a rather large set of logs when you
 finally print the error if your stack is deep 🃏.
 
-## Wrapping errors in Go `1.13`
+### Wrapping errors in Go `1.13`
 
 In version `1.13`, Go introduced the `%w` verb, as well as a few methods on the
 `errors` package to support error identification and incorporate wrapping into
@@ -169,8 +165,8 @@ remain inspectable should we need to identify the underlying cause of an error.
 It's important to keep in mind however, when wrapping with `%w`, you are
 implicitly exposing the error to consumers of your package. Only use this when
 you plan to support the error type and avoid exposing implementation details.
-You can use the `%v` verb instead for non-inspectable errors (no
-`errors.Is(), errors.As()`).
+You can use the `%v` verb instead for non-inspectable errors (no `errors.Is(),
+errors.As()`).
 
 Now having `fmt.Errorf()` available is good, however if you never use it in your
 programs you're still going to end up with logs which are hard to decipher. Now
@@ -182,18 +178,17 @@ Hence, it would be helpful to have a simple set of rules to follow for when
 errors should be wrapped. This is by no means an exhaustive set, however should
 cover the majority of common cases within most programs.
 
-<ol>
-<li>
-When you have <strong>additional context</strong>, which you think would be
-useful to give to the developer reading the log. This is important, as rules are
-<i>not</i> infallible.
-</li>
-<li>
-<strong>Errors returned from another package</strong>. Wrapping these helps
-identify the entry point of the error into your program. e.g.
+1. When you have **additional context**, which you think would be useful to give
+to the developer reading the log. This is important, as rules are *not*
+infallible.
+
 <br />
-<br />
-<pre><code class="language-go hljs">...
+
+2. **Errors returned from another package**. Wrapping these helps identify the
+entry point of the error into your program. e.g.
+
+```go
+...
 
 func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
   sql := `SELECT * FROM transaction WHERE id = $1;`
@@ -206,21 +201,19 @@ func (db *DB) getTansactionByID(tranID string) (Transaction, error) {
   return t, nil
 }
 
-...</code></pre>
-</li>
-<li>
-Errors returned by <strong>interface methods</strong>. Interfaces may be
-implemented by a separate package, therefore wrapping the errors here with
-context may be valuable.
-</li>
-</ol>
+...
+```
+
+3. Errors returned by **interface methods**. Interfaces may be implemented by a
+separate package, therefore wrapping the errors here with context may be
+valuable.
 
 This set of rules gives a good starting point for helping you identify where in
 your program you should wrap errors. In order to help out with this, I've
 written a linter to identify areas where your code is not wrapping errors and it
 possibly should be.
 
-## Wrapcheck
+### Wrapcheck
 
 [Wrapcheck](https://github.com/tomarrell/wrapcheck) is a new linter for Go which
 I built in order to maintain consistency across a codebase with regards to point
