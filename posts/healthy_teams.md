@@ -1,4 +1,4 @@
-# How to build a healthy dev team
+# Building healthy dev teams
 
 In my team at SumUp over the last 2 1/2 years, we've hired a total of 7
 engineers, none of which have left the company. One has moved internally,
