@@ -1,19 +1,21 @@
 # Building healthy dev teams
 
-In my team at SumUp over the last 2 1/2 years, we've hired a total of 7
-engineers, none of which have left the company. One has moved internally,
-however due to chasing new personal challenges. This is a fair amount better
-than some teams I've been part of in the past, and one of the primary reasons
-for this I believe is our technical decision making process.
+Over the last 2 1/2 years we have hired a total of 7 engineers for my team at
+SumUp, none of whom have yet left the company. One has moved internally however,
+to chase new personal challenges. This is a fair amount better than some teams
+I've been part of in the past, and one of the primary reasons for this I believe
+is our technical decision making process.
 
 If you've been working in software for a reasonable length of time, you've
 probably been part of both high functioning teams, but also potentially teams
 which struggled with churn. These are not necessarily mutually exclusive,
 however, certainly inversely correlated.
 
+// TODO insert image
+
 Now churn of engineers is not uncommon, but high churn has significant costs
 to any business and team morale. Hence, keeping it minimal is certainly
-preferable. 
+preferable.
 
 It's part of human nature to want to feel like we are making a contribution in
 some way. This is especially true of engineers when it comes to technical
@@ -83,7 +85,7 @@ other people. It's normal to struggle initially, as I did, however with
 persistence you can learn it just like anything else.
 
 
-## Notes: 
+## Notes:
 
 - It will lead to faster progression
 - It will make people feel like their voice is heard
