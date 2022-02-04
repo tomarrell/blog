@@ -22,7 +22,7 @@ This is a commonly overlooked reason for churn amongst juniors. Faster career pr
 
 ## The feeling of contribution
 
-It is common for teams to have a hierarchy. Engineers who are more or less experienced, with the more experienced ones tending to have more of a say in technical discussions. As a technical leader, this is an important and often overlooked responsibility which without careful attention can have significant repercussions on the team as a whole.
+It is common for teams to have a hierarchy. Engineers who are more or less experienced, with the more experienced ones tending to have more of a say in technical discussions. As a technical leader, this is an important and often overlooked responsibility, which without careful attention can have significant repercussions on the team as a whole.
 
 Most companies have more or less a mapping to junior, intermediate and senior engineer job titles, with advancement beyond this in either a technical or managerial fashion. It is also common for healthy teams to be made up of members from each of these competencies.
 
@@ -47,7 +47,7 @@ This does leave us with one skill that is necessary amongst the senior engineers
 
 Arguing is a skill, it needs to be learned. The ability to convey how you came to a conclusion in a clear manner is incredibly hard, but incredibly necessary when working with other people. It's normal to struggle initially, as I did, however with persistence you can learn it just like anything else.
 
-A side-effect of improving communication from more experienced engineers is the faster progression of those with less experience. Take for example a junior who is part of a team where the experienced developers explain why they should choose a particular database. Quite obviously, that junior is going to come away with a lot more context than one where that wasn't the case.
+A side effect of improving communication from more experienced engineers is the faster progression of those with less experience. Take for example a junior who is part of a team where the experienced developers explain why they should choose a particular database. Quite obviously, that junior is going to come away with a lot more context than one where that wasn't the case.
 
 This helps the junior progress faster in their career while feeling like they are meaningfully contributing to the success of the team.
 
