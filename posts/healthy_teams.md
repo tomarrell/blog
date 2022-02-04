@@ -1,4 +1,8 @@
-# Building healthy dev teams
+# Decision making for healthy dev teams
+
+> TLDR: putting the responsibility of communicating justification on senior
+> members of a team and making technical decisions by an equal representation
+> vote, is the least bad way for a sustainable, healthy technical team.
 
 Over the last 2 1/2 years we have hired a total of 7 engineers for my team at
 SumUp, none of whom have yet left the company. One has moved internally however,
@@ -92,18 +96,29 @@ certainly correlation.
 
 This does leave us with one skill that is necessary amongst the senior engineers
 at your company. Strong communication skills. Or more specifically, strong
-communication when it comes to conveying and justifying an end result.
+communication when it comes to conveying and justifying a conclusion.
 
-Arguing is a skill, it should be learned. How to convey you came to a conclusion
-in a clear manner is incredibly hard, but incredibly necessary when working with
-other people. It's normal to struggle initially, as I did, however with
-persistence you can learn it just like anything else.
+Arguing is a skill, it needs to be learned. The ability to convey how you came
+to a conclusion in a clear manner is incredibly hard, but incredibly necessary
+when working with other people. It's normal to struggle initially, as I did,
+however with persistence you can learn it just like anything else.
+
+A side-effect of improving communication from more experienced engineers is the
+faster progression of those with less experience. Take for example a junior who
+is part of a team where the experienced developers explain why they should
+choose a particular database. Quite obviously, that junior is going to come away
+with a lot more context than one where that wasn't the case.
+
+This helps the junior progress faster in their career while feeling like they
+are meaningfully contributing to the success of the team.
 
 
-## Notes:
+## Wrapping up
 
-- It will lead to faster progression
-- It will make people feel like their voice is heard
-- It will encourage your seniors to improve their communication skills
+If you're a senior member your team, ask yourself if you're communicating the
+justification for your decisions as well as you could be. Also don't be afraid
+to let some less important decisions slide in a vote. Experience should tell you
+what is important, and what can take the back seat to prevent people feeling like
+there's a silent dictator. 
 
-and ultimately, lead to a healthier development team.
+'till next time.
