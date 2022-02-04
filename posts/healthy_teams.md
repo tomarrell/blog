@@ -30,10 +30,6 @@ The issue comes when the contribution to decision making is weighted unevenly.
 
 The best way to encourage participation and this all-important sense of contribution is democratically. A simple vote. All members with an equal say. A senior and a junior with the same vote. Now, before you jump in the comments and tell me that a junior shouldn't have the same decision making power when making critical decisions which may affect the long term functionality of a system, hold on a second.
 
-<center>
-  <img src="https://screenshots.tomarrell.com/cziq4ULSBE.png" width="200"/>
-</center>
-
 Yes, a senior is a senior as they've likely screwed up a fair few more times than someone who is just starting out. You get a pretty good sense of what will and won't work after spending hours debugging. However, this shouldn't give what they say more weight, instead, *it hands them the responsibility to transfer this experience*, even if it is sometimes just intuition, to more junior members.
 
 Essentially, the senior members need to learn to communicate the own decision making process which led to their justification. And not just the senior, this goes for everyone, weighted proportionally to how strong one's opinion is.
