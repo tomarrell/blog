@@ -131,6 +131,26 @@ table {
   margin-bottom: 1.25rem;
 }
 
+.link-title:hover::after {
+  background-color: white;
+}
+
+.link-posts:hover::after {
+  background-color: rgba(110,231,183,var(--tw-text-opacity));
+}
+
+.link-github:hover::after {
+  background-color: rgba(156,163,175,var(--tw-text-opacity));
+}
+
+.link-twitter:hover::after {
+  background-color: rgba(96,165,250,var(--tw-text-opacity));
+}
+
+.link-about:hover::after {
+  background-color: rgba(244,114,182,var(--tw-text-opacity));
+}
+
 {{ if true }}
 body {
   background-color: rgb(13, 13, 13);
@@ -138,6 +158,10 @@ body {
 }
 
 a:hover::after {
+  background-color: #ff5656;
+}
+
+.link-post:hover::after {
   background-color: white;
 }
 
