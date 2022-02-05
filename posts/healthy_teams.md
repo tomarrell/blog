@@ -1,10 +1,12 @@
 # Decision making for healthy dev teams
 
-> TLDR: putting the responsibility of communicating justification on senior members of a team and making technical decisions by an equal representation vote, is the least bad way for a sustainable, healthy technical team.
+> TLDR: Putting the responsibility of effectively communicating on senior members of a team and making technical decisions with an equal representation vote, is the least bad way to achieve a sustainable, healthy technical team.
 
-Over the last 2 1/2 years we have hired a total of 7 engineers for my team at SumUp, none of whom have yet left the company. One has moved internally however, to chase new personal challenges. This is a fair amount better than some teams I've been part of in the past, and one of the primary reasons for this I believe is our technical decision making process.
+Over the last 2 1/2 years we have hired a total of 7 engineers for my team at SumUp, none of whom have yet left the company. One has moved internally however, to pursue new personal challenges. This is a fair amount better than some teams I've been part of in the past, and one of the primary reasons for this I believe is our technical decision making process.
 
 If you've been working in software for a reasonable length of time, you've probably been part of both highly functioning teams, but also potentially teams which struggled with churn. These are not necessarily mutually exclusive, however, certainly inversely correlated.
+
+Measuring the health of a team is something that there are literally companies trying to solve. Which means that it's not exactly trivial. I'm certainly not going to be able to share any breakthroughs on that front, however, research does point to the idea that [happy people are more productive](https://www.apa.org/pubs/journals/releases/bul-1316803.pdf). As I'm sure many of you have probably had personal experience with, a feeling of making a positive impact is certainly a factor in ones overall satisfaction at work. Hence, a healthy team should be able to foster this.
 
 ![Productivity decreasing with increased
 attrition](https://screenshots.tomarrell.com/qfohlho2j2.png)
@@ -13,7 +15,7 @@ attrition](https://screenshots.tomarrell.com/qfohlho2j2.png)
 
 Now churn of engineers is not uncommon, but high churn has significant costs to any business and team morale. Hence, keeping it minimal is certainly preferable.
 
-It's part of human nature to want to feel like we are making a contribution in some way. This is especially true of engineers when it comes to technical discussions. Someone who does not feel their opinion is valued will very quickly disengage and likely take up an opportunity where their opinion is valued.
+It's part of human nature to want to feel like we are making a contribution in some way. This is especially true of engineers when it comes to technical discussions. Someone who does not feel their opinion is valued will very quickly disengage and likely take up an opportunity where their opinion is more valued.
 
 This is one of the key aspects to a healthy team. Making sure everyone feels like they contribute in a meaningful way within the team. The same goes for engineers of all levels when it comes to technical discussions. Yet it is often those that have less experience who are more susceptible to not having their opinions heard or valued.
 
@@ -55,5 +57,3 @@ This helps the junior progress faster in their career while feeling like they ar
 ## Wrapping up
 
 If you're a senior member in your team, ask yourself if you're communicating the justification for your decisions as well as you could be. Also, don't be afraid to let some less important decisions slide in a vote. Experience should tell you what is essential, and what can take the back seat to prevent people feeling like there's a silent dictator. 
-
-'till next time.
