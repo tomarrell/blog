@@ -2,9 +2,9 @@ title = "Decision Making for Healthy Teams"
 date = "2022-03-04T15:33:22+0100"
 
 description = """
-TLDR: Putting the responsibility of effectively communicating on senior members
-of a team and making technical decisions with an equal representation vote, is
-the least bad way to achieve a sustainable, healthy technical team.
+Putting the responsibility of effectively communicating on senior members of a
+team and making technical decisions with an equal representation vote, is the
+least bad way to achieve a sustainable, healthy technical team.
 """
 
 content = """
@@ -32,11 +32,17 @@ sure many of you have probably had personal experience with, a feeling of making
 a positive impact is certainly a factor in one's overall satisfaction at work.
 Hence, a healthy team should be able to foster this.
 
-![Productivity decreasing with increased
-attrition](https://screenshots.tomarrell.com/qfohlho2j2.png)
+<div style="width: 80%; margin-left: auto; margin-right: auto;">
+  <image src="https://screenshots.tomarrell.com/qfohlho2j2.png"
+  alt="Productivity decreasing with increased attrition">
 
-*Fig 1. As attrition increases, the ability for the team to be healthy and
-productive decreases. Graph definitely to scale.*
+  <p>
+    <i>
+      Fig 1. As attrition increases, the ability for the team to be healthy and
+      productive decreases. Graph definitely to scale.
+    </i>
+  </p>
+</div>
 
 Now churn of engineers is not uncommon, but high churn has significant costs to
 any business and team morale. Hence, keeping it minimal is certainly preferable.
