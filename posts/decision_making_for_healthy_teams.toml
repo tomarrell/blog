@@ -1,5 +1,5 @@
 title = "Decision Making for Healthy Teams"
-date = "2022-02-05T01:55:04+0100"
+date = "2022-03-04T15:33:22+0100"
 
 description = """
 TLDR: Putting the responsibility of effectively communicating on senior members
@@ -12,7 +12,7 @@ content = """
 members of a team and making technical decisions with an equal representation
 vote, is the least bad way to achieve a sustainable, healthy technical team.
 
-Over the last 2 1/2 years we have hired a total of 7 engineers for my team at
+Over the last 2 1/2 years, we have hired a total of 7 engineers for my team at
 SumUp, none of whom have yet left the company. One has moved internally however,
 to pursue new personal challenges. This is a fair amount better than some teams
 I've been part of in the past, and one of the primary reasons for this I believe
@@ -29,7 +29,7 @@ going to be able to share any breakthroughs on that front, however, research
 does point to the idea that [happy people are more
 productive](https://www.apa.org/pubs/journals/releases/bul-1316803.pdf). As I'm
 sure many of you have probably had personal experience with, a feeling of making
-a positive impact is certainly a factor in ones overall satisfaction at work.
+a positive impact is certainly a factor in one's overall satisfaction at work.
 Hence, a healthy team should be able to foster this.
 
 ![Productivity decreasing with increased
@@ -119,8 +119,8 @@ when working with other people. It's normal to struggle initially, as I did,
 however with persistence you can learn it just like anything else.
 
 A side effect of improving communication from more experienced engineers is the
-faster progression of those with less experience. Take for example a junior who
-is part of a team where the experienced developers explain why they should
+faster progression of those with less experience. Take, for example, a junior
+who is part of a team where the experienced developers explain why they should
 choose a particular database. Quite obviously, that junior is going to come away
 with a lot more context than one where that wasn't the case.
 
