@@ -1,10 +1,20 @@
 title = "Decision Making for Healthy Teams"
 date = "2022-03-04T15:33:22+0100"
 
+og = {
+  image = "decision_making_for_healthy_teams.png",
+  description = "The way a technical team makes decisions plays an important role in the long term health and sustainability of the team."
+}
+
 description = """
-Putting the responsibility of effectively communicating on senior members of a
-team and making technical decisions with an equal representation vote, is the
-least bad way to achieve a sustainable, healthy technical team.
+The way a team makes technical decisions plays an important role in the long
+term sustainability of the team.
+
+<br><br>
+
+Bestowing the responsibility to effectively communicate technical reasoning on
+the senior members of the team – while making decisions using an equal
+representation vote – is the least bad way and will help ensure a healthy team.
 """
 
 content = """

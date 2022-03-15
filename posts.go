@@ -22,10 +22,14 @@ const (
 )
 
 type Post struct {
-	ID             string        `toml:"_"` // File name
-	Title          string        `toml:"title"`
-	RawDate        string        `toml:"date"`
-	Date           time.Time     `toml:"_"`
+	ID      string    `toml:"_"` // File name
+	Title   string    `toml:"title"`
+	RawDate string    `toml:"date"`
+	Date    time.Time `toml:"_"`
+	Og      struct {
+		Description string `toml:"description"`
+		Image       string `toml:"image"`
+	} `toml:"og"`
 	RawDescription string        `toml:"description"`
 	Description    template.HTML `toml:"_"`
 	Content        string        `toml:"content"`

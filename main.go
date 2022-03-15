@@ -53,9 +53,11 @@ func main() {
 }
 
 type postData struct {
-	Title   string
-	Date    time.Time
-	Content template.HTML
+	Title       string
+	Description string
+	Image       string
+	Date        time.Time
+	Content     template.HTML
 }
 
 func handlePost(t *template.Template) echo.HandlerFunc {
@@ -71,9 +73,11 @@ func handlePost(t *template.Template) echo.HandlerFunc {
 		html := markdown.ToHTML([]byte(p.Content), nil, nil)
 
 		d := postData{
-			Title:   p.Title,
-			Date:    p.Date,
-			Content: template.HTML(html),
+			Title:       p.Title,
+			Description: p.Og.Description,
+			Image:       p.Og.Image,
+			Date:        p.Date,
+			Content:     template.HTML(html),
 		}
 
 		if err := t.ExecuteTemplate(c.Response().Writer, "post.html.tmpl", d); err != nil {

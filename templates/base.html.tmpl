@@ -17,6 +17,10 @@
     <meta property="og:description" content="Tom Arrell's blog. Tom is a Software Engineer who writes about programming, embedded and electrical projects, and life." />
   {{ end }}
 
+  {{ if .Image }}
+    <meta property="og:image" content="https://blog.tomarrell.com/public/og/{{ .Image }}" />
+  {{ end }}
+
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
