@@ -58,6 +58,7 @@ type postData struct {
 	Image       string
 	Date        time.Time
 	Content     template.HTML
+	Type        string
 }
 
 func handlePost(t *template.Template) echo.HandlerFunc {
@@ -78,6 +79,7 @@ func handlePost(t *template.Template) echo.HandlerFunc {
 			Image:       p.Og.Image,
 			Date:        p.Date,
 			Content:     template.HTML(html),
+			Type:        "article",
 		}
 
 		if err := t.ExecuteTemplate(c.Response().Writer, "post.html.tmpl", d); err != nil {
