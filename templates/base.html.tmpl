@@ -7,8 +7,13 @@
     <title>Tom Arrell's Blog</title>
   {{ end }}
 
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary" />
+
+  <!-- OG Meta -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   {{ if .Description }}
     <meta name="description" content="{{ .Description }}" />
     <meta property="og:description" content="{{ .Description }}" />
@@ -24,6 +29,7 @@
   {{ if .Type }}
     <meta property="og:type" content="{{ .Type }}" />
   {{ end }}
+  <!-- End Meta -->
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
