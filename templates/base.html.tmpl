@@ -3,12 +3,15 @@
 <head>
   {{ if .Title }}
     <title>Tom's Blog - {{ .Title }}</title>
+    <meta property="og:title" content="{{ .Title }}" />
   {{ else }}
-    <title>Tom Arrell's Blog</title>
+    <title>Tom's Blog</title>
+    <meta property="og:title" content="Tom's Blog" />
   {{ end }}
 
   <!-- Twitter Meta -->
   <meta name="twitter:card" content="summary" />
+  <meta name="twitter:creator" content="@tom_arrell" />
 
   <!-- OG Meta -->
   <meta charset="utf-8" />
