@@ -1,9 +1,17 @@
 {{ template "Base" . }}
 
-<div class="container max-w-4xl flex flex-col md:flex-row m-auto py-6">
-  {{ template "Heading" }}
+<!-- <div class="sticky-nav flex" style="position: fixed; top: 1.5rem; left: 0; width: 100%;"> -->
+  <!-- <div class="flex-1">{{ template "Heading" }}</div> -->
+  <!-- <div class="container max-w-2xl flex-col md:flex-row py-6"></div> -->
+  <!-- <div class="flex-1 invisible"></div> -->
+<!-- </div> -->
 
-  <div class="flex-auto flex flex-col mt-8 md:mt-0 gap-6">
+<div class="container max-w-4xl flex flex-col lg:flex-row m-auto py-6 gap-12">
+  <div class="flex-none">
+    {{ template "Heading" }}
+  </div>
+
+  <div class="flex-auto flex flex-col lg:mt-0 gap-6">
     <div class="flex-1">
       <h1 class="mb-2 text-3xl">{{ .Title }}</h1>
       <p class="mb-3 italic">{{ .Date.Format "02.01.2006" }}</p>
@@ -26,14 +34,19 @@
     </script>
     <script src="https://cdn.getreplybox.com/js/embed.js"></script>
   </div>
+
+  <div class="flex-none invisible">
+    {{ template "Heading" }}
+  </div>
 </div>
 
 <style>
 a {
-  color: #ff5656;
+  color: #e36060;
 }
 
 .content {
+  flex: 1;
   position: relative;
 }
 
@@ -90,7 +103,7 @@ a {
 .content h1 { font-size: 2.4rem; margin-bottom: 0.8rem; }
 .content h2 { font-size: 1.8rem; margin-bottom: 0.8rem; }
 .content h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
-.content h4 { font-size: 0.8rem; margin-bottom: 0.8rem; }
-.content h5 { font-size: 0.6rem; margin-bottom: 0.8rem; }
-.content h6 { font-size: 0.4rem; margin-bottom: 0.8rem; }
+.content h4 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+.content h5 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+.content h6 { font-size: 1.2rem; margin-bottom: 0.8rem; }
 </style>
