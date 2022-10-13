@@ -1,28 +1,30 @@
-## Tom's Blog
-Source for my personal blog, written in Rust.
+# Tom's Blog
+
+Source for my personal blog.
 
 A live version is hosted at [blog.tomarrell.com](https://blog.tomarrell.com).
 
-Web server using [actix_web](https://github.com/actix/actix-web), toml parsing using [serde](https://github.com/serde-rs/serde), logging using [pretty_env_logger](https://github.com/seanmonstar/pretty-env-logger), html templating using [handlebars-rust](https://github.com/sunng87/handlebars-rust).
+## Setup
 
-## Installation
-If you would like to setup a local copy for yourself:
+To run the project, clone into a directory and run.
+
 ```bash
->> # clone the repository
->> cd blog
->> make start
+$ go run .
 ```
 
-This will compile the crate in *release* mode, and begin the server listening on port `8080`.
-
-This command is also setup to specifically write output to `log.txt` in the project root. Feel free to change this behaviour to what suits.
+The server will begin listening on port `8080`.
 
 ## Writing content
-The blog works by parsing **Post** files, which are a custom Toml format including all the fields needed to render the page. The posts are contained in the `./posts` directory.
 
-The files in this directory will be parsed, and rendered before being returned to the client.
+The blog works by parsing **Post** files, which are a custom Toml format
+including all the fields needed to render the page. The posts are contained in
+the `./posts` directory.
+
+The files in this directory will be parsed, and rendered before being returned
+to the client.
 
 An example **Post** is below:
+
 ```toml
 # Info
 title = "Test Post"
@@ -38,7 +40,8 @@ content = """
 
 ...etc
 
-This is some content for the blog post. It supports the full CommonMark spec by default. However can be expanded to the Github Markdown spec.
+This is some content for the blog post. It supports the full CommonMark spec by
+default. However can be expanded to the Github Markdown spec.
 
 ---
 
@@ -50,13 +53,15 @@ This is some content for the blog post. It supports the full CommonMark spec by 
 * World
 
 ![](/public/images/turtle.jpg)
-
 """
 ```
 
-The file name of each post will be designated as its *unique ID*. It also determines its sorted position. Therefore I recommend you use a naming convention of `YYYY-MM-DD-*.toml` in order to keep things orderly in filesystems.
+The file name of each post will be designated as its path when serving.
+Therefore, once a post is published, avoid changing the file name to prevent
+accidentally changing the served URL path.
 
 ## License
+
 Licensed under the GNU GPL v3.0 license. Please see the extended license terms here.
 
 Simple breakdown:
